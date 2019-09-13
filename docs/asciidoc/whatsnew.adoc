@@ -1,0 +1,43 @@
+:batch-asciidoc: ./
+:toc: left
+:toclevels: 4
+
+[[whatsNew]]
+
+== Spring Batch 4.2 新特性
+
+Spring Batch 4.2 添加了下面的新特性：
+
+* 使用 https://micrometer.io[Micrometer] 来支持批量指标（batch metrics）
+* 支持从 https://kafka.apache.org[Apache Kafka] topics 读取/写入（reading/writing） 数据
+* 支持从 https://avro.apache.org[Apache Avro] 资源中读取/写入（reading/writing） 数据
+* 改进支持文档
+
+[[whatsNewMetrics]]
+=== 使用 Micrometer 的批量指标
+
+本发行版本介绍了可以让你通过使用 Micrometer 来监控你的批量作业。在默认的情况下，Spring Batch 将会收集相关批量指标
+（包括，作业时间，步骤的时间，读取和写入的项目，以及其他的相关信息），和将这些指标通过 `spring.batch` 前缀（prefix）注册到 Micrometer 的全局指标中。
+
+这些指标可以发布到任何能够支持 Micrometer 的  https://micrometer.io/docs/concepts#_supported_monitoring_systems[监控系统（monitoring system）]中。
+
+
+有关这个新特性的更多细节，请参考
+<<monitoring-and-metrics.adoc#monitoring-and-metrics,Monitoring and metrics>> 章节中的内容。
+
+[[whatsNewKafka]]
+=== Apache Kafka item 读取/写入
+
+本发行版本添加了一个新的 `KafkaItemReader` 和 `KafkaItemWriter`， 用来从 Kafka 的 topics 中读取和写入。
+有关更多这个新组建的信息，请参考： https://docs.spring.io/spring-batch/4.2.x/api/index.html[Javadoc]。
+
+[[whatsNewAvro]]
+=== Apache Avro item 读取/写入
+
+本发行版本添加了一个新的 `AvroItemReader` 和 `AvroItemWriter`， 用来从 Avro 资源中读取和写入。
+有关更多这个新组建的信息，请参考： https://docs.spring.io/spring-batch/4.2.x/api/index.html[Javadoc].
+
+[[whatsNewDocs]]
+=== 文档更新
+
+对参考的文档进行更新，以便于与其他 Spring 项目的文档风格保持一致。

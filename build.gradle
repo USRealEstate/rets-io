@@ -1,14 +1,17 @@
 plugins {
+    id 'maven-publish'
     id "org.asciidoctor.convert" version "2.3.0"
 }
 
 apply plugin: 'java'
 
-version = '1.0.0'
+group = 'com.ossez.reoc'
+version = '0.1.0'
 
 allprojects {
     repositories {
         maven { url "https://maven.ossez.com/repository/internal" }
+        mavenLocal()
     }
 
     ext {
@@ -54,7 +57,7 @@ task prepareAsciidocBuildZH(type: Sync) {
 
 }
 
-task('makePDFZH', type: org.asciidoctor.gradle.AsciidoctorTask){
+task('makePDFZH', type: org.asciidoctor.gradle.AsciidoctorTask) {
     dependsOn prepareAsciidocBuildZH
     backends 'pdf'
     sourceDir "$buildDir/asciidoc/assemble"
@@ -67,10 +70,9 @@ task('makePDFZH', type: org.asciidoctor.gradle.AsciidoctorTask){
             'sectanchors': '',
             'sectnums': '',
             'toc': '',
-            'source-highlighter' : 'coderay',
+            'source-highlighter': 'coderay',
             revnumber: project.version
 }
-
 
 
 asciidoctor {
@@ -101,5 +103,22 @@ asciidoctor {
             'allow-uri-read': '',
             revnumber: project.version
 }
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
+}
 
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = 'javadoc'
+}
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+}
