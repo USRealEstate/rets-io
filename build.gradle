@@ -5,7 +5,7 @@ plugins {
 
 apply plugin: 'java'
 
-group = 'com.ossez.reoc'
+group = 'com.ossez.rets-io'
 version = '0.1.0'
 
 allprojects {
