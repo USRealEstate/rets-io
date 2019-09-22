@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.LinkedList;
 
-import org.apache.commons.lang.exception.NestableRuntimeException;
 import org.apache.commons.logging.LogFactory;
 import org.xml.sax.InputSource;
 
@@ -163,7 +162,7 @@ class StreamingSearchResult implements SearchResultSet, SearchResultCollector {
 		if (state() > BUFFER_FULL) {
 			if (this.exception == null)
 				setException(new RetsException("Attempting to add rows to buffer when in complete state"));
-			throw new NestableRuntimeException(this.exception);
+			throw new RuntimeException(this.exception);
 		}
 
 		// check complete.
@@ -174,7 +173,7 @@ class StreamingSearchResult implements SearchResultSet, SearchResultCollector {
 				if (this.exception == null)
 					setException(new RetsException("Timeout writing to streaming result set buffer, timeout length = "
 							+ this.timeout));
-				throw new NestableRuntimeException(this.exception);
+				throw new RuntimeException(this.exception);
 			}
 		}
 
@@ -283,7 +282,7 @@ class StreamingSearchResult implements SearchResultSet, SearchResultCollector {
 		try {
 			return checkException();
 		} catch (RetsException e) {
-			throw new NestableRuntimeException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -301,7 +300,7 @@ class StreamingSearchResult implements SearchResultSet, SearchResultCollector {
 			wait(this.timeout);
 		} catch (InterruptedException e) {
 			pushState(COMPLETE);
-			throw new NestableRuntimeException(e);
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -2,11 +2,7 @@ package com.ossez.reoc.rets.examples;
 
 import java.net.MalformedURLException;
 
-import com.ossez.reoc.rets.client.CommonsHttpClient;
-import com.ossez.reoc.rets.client.RetsException;
-import com.ossez.reoc.rets.client.RetsHttpClient;
-import com.ossez.reoc.rets.client.RetsSession;
-import com.ossez.reoc.rets.client.RetsVersion;
+import com.ossez.reoc.rets.client.*;
 import com.ossez.reoc.rets.common.metadata.types.MClass;
 import com.ossez.reoc.rets.common.metadata.types.MResource;
 import com.ossez.reoc.rets.common.metadata.types.MSystem;
@@ -34,7 +30,9 @@ public class RetsGetMetadataExample {
 		session.setMethod("POST");
 		try {
 			//Login
-			session.login(username, password);
+			LoginResponse loginResponse = session.login(username, password);
+
+			System.out.println(">>>" + loginResponse.getSessionId());
 		} catch (RetsException e) {
 			e.printStackTrace();
 		}

@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.ossez.reoc.rets.common.util.CaseInsensitiveTreeMap;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.ossez.reoc.rets.common.metadata.attrib.AttrAlphanum;

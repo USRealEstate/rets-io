@@ -7,7 +7,7 @@
  */
 package com.ossez.reoc.rets.common.metadata.attrib;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import com.ossez.reoc.rets.common.metadata.AttrType;
 import com.ossez.reoc.rets.common.metadata.MetaParseException;
 

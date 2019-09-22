@@ -2,8 +2,8 @@ package com.ossez.reoc.rets.client;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 public class RetsVersion implements Serializable {
 	public static final String RETS_VERSION_HEADER = "RETS-Version";

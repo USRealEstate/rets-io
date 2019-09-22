@@ -1,8 +1,9 @@
 package com.ossez.reoc.rets.client;
 
-import org.apache.commons.lang.exception.NestableException;
-
-public class RetsException extends NestableException {
+/**
+ * @author YuCheng Hu
+ */
+public class RetsException extends Exception {
 	public RetsException() {
 		super();
 	}

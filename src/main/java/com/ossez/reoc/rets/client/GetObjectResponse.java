@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.ossez.reoc.rets.common.util.CaseInsensitiveTreeMap;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.http.HeaderElement;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicHeaderValueParser;

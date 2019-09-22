@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Map;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class GetObjectRequest extends VersionInsensitiveRequest {
 	public static final String KEY_RESOURCE = "Resource";

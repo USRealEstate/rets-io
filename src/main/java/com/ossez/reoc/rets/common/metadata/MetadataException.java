@@ -7,9 +7,8 @@
  */
 package com.ossez.reoc.rets.common.metadata;
 
-import org.apache.commons.lang.exception.NestableException;
 
-public class MetadataException extends NestableException {
+public class MetadataException extends Exception {
 	public MetadataException() {
 		super();
 	}

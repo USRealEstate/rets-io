@@ -2,7 +2,7 @@ package com.ossez.reoc.rets.examples;
 
 import java.net.MalformedURLException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import com.ossez.reoc.rets.client.CommonsHttpClient;
 import com.ossez.reoc.rets.client.RetsException;
 import com.ossez.reoc.rets.client.RetsHttpClient;

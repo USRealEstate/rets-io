@@ -1,6 +1,6 @@
 package com.ossez.reoc.rets.client;
 
-import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang3.SystemUtils;
 /**
  * Exception class for invalid reply codes from a Rets server
  */

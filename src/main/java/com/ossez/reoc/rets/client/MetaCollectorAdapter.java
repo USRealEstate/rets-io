@@ -3,7 +3,7 @@ package com.ossez.reoc.rets.client;
 import com.ossez.reoc.rets.common.metadata.MetaCollector;
 import com.ossez.reoc.rets.common.metadata.MetaObject;
 import com.ossez.reoc.rets.common.metadata.MetadataType;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

@@ -8,7 +8,7 @@ import com.ossez.reoc.rets.common.metadata.JDomCompactBuilder;
 import com.ossez.reoc.rets.common.metadata.JDomStandardBuilder;
 import com.ossez.reoc.rets.common.metadata.MetaObject;
 import com.ossez.reoc.rets.common.metadata.MetadataException;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import org.jdom.Element;
 import org.jdom.JDOMException;

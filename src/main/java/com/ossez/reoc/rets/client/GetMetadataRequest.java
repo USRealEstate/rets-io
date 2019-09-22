@@ -1,6 +1,6 @@
 package com.ossez.reoc.rets.client;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class GetMetadataRequest extends VersionInsensitiveRequest {
 	private static final int COMPACT_FORMAT = 0;

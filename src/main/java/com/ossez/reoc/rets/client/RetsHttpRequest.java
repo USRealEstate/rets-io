@@ -9,8 +9,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import com.ossez.reoc.rets.common.util.CaseInsensitiveTreeMap;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /** Base Http Request object */
 public abstract class RetsHttpRequest implements Serializable {
