@@ -36,7 +36,7 @@ dependencies {
     compile group: 'commons-codec', name: 'commons-codec', version: '1.3'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.1.1'
 
-    compile group: 'com.google.guava', name: 'guava', version: '11.0.1'
+    compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
 
     // XML
     compile 'jdom:jdom:1.0'
