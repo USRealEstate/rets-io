@@ -9,24 +9,24 @@ import com.ossez.reoc.rets.common.metadata.JDomStandardBuilder;
 import com.ossez.reoc.rets.common.metadata.MetaObject;
 import com.ossez.reoc.rets.common.metadata.MetadataException;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Document;
-import org.jdom.input.SAXBuilder;
 
 public class GetMetadataResponse {
 	private MetaObject[] mMetadataObjs;
 
 	public GetMetadataResponse(InputStream stream, boolean compact, boolean isStrict) throws RetsException {
 		try {
-			SAXBuilder builder = new SAXBuilder();
-			Document document = builder.build(stream);
+			SAXReader builder = new SAXReader();
+			Document document = builder.read(stream);
 			Element retsElement = document.getRootElement();
 			if (!retsElement.getName().equals("RETS")) {
 				throw new RetsException("Expecting RETS");
 			}
-			int replyCode = NumberUtils.toInt(retsElement.getAttributeValue("ReplyCode"));
+			int replyCode = NumberUtils.toInt(retsElement.attributeValue("ReplyCode"));
 			if (ReplyCode.SUCCESS.equals(replyCode)) {
 				if (compact) {
 					handleCompactMetadata(document, isStrict);
@@ -38,18 +38,16 @@ public class GetMetadataResponse {
 				handleNoMetadataFound(retsElement);
 			} else {
 				InvalidReplyCodeException e = new InvalidReplyCodeException(replyCode);
-				e.setRemoteMessage(retsElement.getAttributeValue(retsElement.getAttributeValue("ReplyText")));
+				e.setRemoteMessage(retsElement.attributeValue(retsElement.attributeValue("ReplyText")));
 				throw e;
 			}
-		} catch (JDOMException e) {
-			throw new RetsException(e);
-		} catch (IOException e) {
+		} catch (DocumentException e) {
 			throw new RetsException(e);
 		}
 	}
 
 	private void handleNoMetadataFound(Element retsElement) throws RetsException {
-		List children = retsElement.getChildren();
+		List children = retsElement.elements();
 		if (children.size() != 0) {
 			throw new RetsException("Expecting 0 children when results");
 		}

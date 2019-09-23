@@ -9,11 +9,11 @@ import com.ossez.reoc.rets.common.metadata.JDomCompactBuilder;
 import com.ossez.reoc.rets.common.metadata.JDomStandardBuilder;
 import com.ossez.reoc.rets.common.metadata.Metadata;
 import com.ossez.reoc.rets.common.metadata.MetadataBuilder;
-import org.jdom.Document;
-import org.jdom.input.SAXBuilder;
-import org.jdom.output.XMLOutputter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 
 /**
@@ -278,13 +278,16 @@ public class RetsTransport {
 			Object monitorobj = null;
 			monitorobj = this.monitor.eventStart("Parsing metadata");
 			try {
-				SAXBuilder xmlBuilder = new SAXBuilder();
-				Document xmlDocument = xmlBuilder.build(httpResponse.getInputStream());
+				SAXReader xmlBuilder = new SAXReader();
+				Document xmlDocument = xmlBuilder.read(httpResponse.getInputStream());
 				if (!location.equals("null")){
-					 XMLOutputter outputter = new XMLOutputter();
+
 					 FileWriter writer = new FileWriter(location);
-					 outputter.output(xmlDocument, writer); 
-					 outputter.outputString(xmlDocument);
+					XMLWriter  outputter = new XMLWriter(writer);
+
+					outputter.write(xmlDocument);
+					outputter.close();
+					
 				}
 				MetadataBuilder metadataBuilder;
 				if (req.isCompactFormat()) {

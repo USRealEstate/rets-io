@@ -14,10 +14,8 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.dom4j.*;
+
 import com.ossez.reoc.rets.common.metadata.types.MClass;
 import com.ossez.reoc.rets.common.metadata.types.MEditMask;
 import com.ossez.reoc.rets.common.metadata.types.MLookup;
@@ -34,6 +32,7 @@ import com.ossez.reoc.rets.common.metadata.types.MValidationExternal;
 import com.ossez.reoc.rets.common.metadata.types.MValidationExternalType;
 import com.ossez.reoc.rets.common.metadata.types.MValidationLookup;
 import com.ossez.reoc.rets.common.metadata.types.MValidationLookupType;
+import org.dom4j.io.SAXReader;
 import org.xml.sax.InputSource;
 
 public class JDomCompactBuilder extends MetadataBuilder {
@@ -75,13 +74,11 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	public Metadata build(InputSource source) throws MetadataException {
-		SAXBuilder builder = new SAXBuilder();
+		SAXReader builder = new SAXReader();
 		Document document;
 		try {
-			document = builder.build(source);
-		} catch (JDOMException e) {
-			throw new MetadataException("Couldn't build document", e);
-		} catch (IOException e) {
+			document = builder.read(source);
+		} catch (DocumentException e) {
 			throw new MetadataException("Couldn't build document", e);
 		}
 		return build(document);
@@ -97,72 +94,72 @@ public class JDomCompactBuilder extends MetadataBuilder {
 		if (!root.getName().equals(CONTAINER_ROOT)) {
 			throw new MetadataException("Invalid root element");
 		}
-		Element container = root.getChild(CONTAINER_SYSTEM);
+		Element container = root.element(CONTAINER_SYSTEM);
 		if (container != null) {
 			MSystem sys = processSystem(container);
-			if (root.getChild(CONTAINER_RESOURCE) != null) {
+			if (root.element(CONTAINER_RESOURCE) != null) {
 				Metadata m = new Metadata(sys);
 				recurseAll(m, root);
 			}
 			return new MetaObject[] { sys };
 		}
-		container = root.getChild(CONTAINER_RESOURCE);
+		container = root.element(CONTAINER_RESOURCE);
 		if (container != null) {
 			return processResource(container);
 		}
-		container = root.getChild(CONTAINER_CLASS);
+		container = root.element(CONTAINER_CLASS);
 		if (container != null) {
 			return processClass(container);
 		}
-		container = root.getChild(CONTAINER_TABLE);
+		container = root.element(CONTAINER_TABLE);
 		if (container != null) {
 			return processTable(container);
 		}
-		container = root.getChild(CONTAINER_UPDATE);
+		container = root.element(CONTAINER_UPDATE);
 		if (container != null) {
 			return processUpdate(container);
 		}
-		container = root.getChild(CONTAINER_UPDATETYPE);
+		container = root.element(CONTAINER_UPDATETYPE);
 		if (container != null) {
 			return processUpdateType(container);
 		}
-		container = root.getChild(CONTAINER_OBJECT);
+		container = root.element(CONTAINER_OBJECT);
 		if (container != null) {
 			return processObject(container);
 		}
-		container = root.getChild(CONTAINER_SEARCHHELP);
+		container = root.element(CONTAINER_SEARCHHELP);
 		if (container != null) {
 			return processSearchHelp(container);
 		}
-		container = root.getChild(CONTAINER_EDITMASK);
+		container = root.element(CONTAINER_EDITMASK);
 		if (container != null) {
 			return processEditMask(container);
 		}
-		container = root.getChild(CONTAINER_LOOKUP);
+		container = root.element(CONTAINER_LOOKUP);
 		if (container != null) {
 			return processLookup(container);
 		}
-		container = root.getChild(CONTAINER_LOOKUPTYPE);
+		container = root.element(CONTAINER_LOOKUPTYPE);
 		if (container != null) {
 			return processLookupType(container);
 		}
-		container = root.getChild(CONTAINER_VALIDATIONLOOKUP);
+		container = root.element(CONTAINER_VALIDATIONLOOKUP);
 		if (container != null) {
 			return processValidationLookup(container);
 		}
-		container = root.getChild(CONTAINER_VALIDATIONLOOKUPTYPE);
+		container = root.element(CONTAINER_VALIDATIONLOOKUPTYPE);
 		if (container != null) {
 			return processValidationLookupType(container);
 		}
-		container = root.getChild(CONTAINER_VALIDATIONEXTERNAL);
+		container = root.element(CONTAINER_VALIDATIONEXTERNAL);
 		if (container != null) {
 			return processValidationExternal(container);
 		}
-		container = root.getChild(CONTAINER_VALIDATIONEXTERNALTYPE);
+		container = root.element(CONTAINER_VALIDATIONEXTERNALTYPE);
 		if (container != null) {
 			return processValidationExternalType(container);
 		}
-		container = root.getChild(CONTAINER_VALIDATIONEXPRESSION);
+		container = root.element(CONTAINER_VALIDATIONEXPRESSION);
 		if (container != null) {
 			return processValidationExpression(container);
 		}
@@ -174,7 +171,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 		if (!root.getName().equals(CONTAINER_ROOT)) {
 			throw new MetadataException("Invalid root element");
 		}
-		Element element = root.getChild(CONTAINER_SYSTEM);
+		Element element = root.element(CONTAINER_SYSTEM);
 		if (element == null) {
 			throw new MetadataException("Missing element " + CONTAINER_SYSTEM);
 		}
@@ -218,7 +215,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private String[] getColumns(Element el) {
-		Element cols = el.getChild(COLUMNS);
+		Element cols = el.element(COLUMNS);
 		return split(cols);
 	}
 
@@ -256,7 +253,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	 * @throws MetaParseException if the value is null.
 	 */
 	private String getNonNullAttribute(Element element, String name) throws MetaParseException {
-		String value = element.getAttributeValue(name);
+		String value = element.attributeValue(name);
 		if (value == null) {
 			throw new MetaParseException("Attribute '" + name + "' not found on tag " + toString(element));
 		}
@@ -265,21 +262,21 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private String toString(Element element) {
 		StringBuffer buffer = new StringBuffer();
-		List attributes = element.getAttributes();
+		List attributes = element.attributes();
 		buffer.append("'").append(element.getName()).append("'");
 		buffer.append(", attributes: ").append(attributes);
 		return buffer.toString();
 	}
 
 	private MSystem processSystem(Element container) {
-		Element element = container.getChild(ELEMENT_SYSTEM);
+		Element element = container.element(ELEMENT_SYSTEM);
 		MSystem system = buildSystem();
 		// system metadata is such a hack.  the first one here is by far my favorite
-		String comment = container.getChildText(MSystem.COMMENTS);
-		String systemId = element.getAttributeValue(MSystem.SYSTEMID);
-		String systemDescription = element.getAttributeValue(MSystem.SYSTEMDESCRIPTION);
-		String version = container.getAttributeValue(MSystem.VERSION);
-		String date = container.getAttributeValue(MSystem.DATE);
+		String comment = container.elementText(MSystem.COMMENTS);
+		String systemId = element.attributeValue(MSystem.SYSTEMID);
+		String systemDescription = element.attributeValue(MSystem.SYSTEMDESCRIPTION);
+		String version = container.attributeValue(MSystem.VERSION);
+		String date = container.attributeValue(MSystem.DATE);
 		setAttribute(system, MSystem.COMMENTS, comment);
 		setAttribute(system, MSystem.SYSTEMID, systemId);
 		setAttribute(system, MSystem.SYSTEMDESCRIPTION, systemDescription);
@@ -290,7 +287,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private void attachResource(Metadata metadata, Element root) {
 		MSystem system = metadata.getSystem();
-		List containers = root.getChildren(CONTAINER_RESOURCE);
+		List containers = root.elements(CONTAINER_RESOURCE);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MResource[] resources = this.processResource(container);
@@ -302,7 +299,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MResource[] processResource(Element resourceContainer) {
 		String[] columns = getColumns(resourceContainer);
-		List rows = resourceContainer.getChildren(DATA);
+		List rows = resourceContainer.elements(DATA);
 		MResource[] resources = new MResource[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -315,7 +312,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachClass(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_CLASS);
+		List containers = root.elements(CONTAINER_CLASS);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			String resourceId = getNonNullAttribute(container, ATTRIBUTE_RESOURCE);
@@ -332,7 +329,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 		String resourceId = getNonNullAttribute(classContainer, ATTRIBUTE_RESOURCE);
 		LOG.debug("resource name: " + resourceId + " for container " + name);
 		String[] columns = getColumns(classContainer);
-		List rows = classContainer.getChildren(DATA);
+		List rows = classContainer.elements(DATA);
 		MClass[] classes = new MClass[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -345,7 +342,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachTable(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_TABLE);
+		List containers = root.elements(CONTAINER_TABLE);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			String resourceId = getNonNullAttribute(container, ATTRIBUTE_RESOURCE);
@@ -368,7 +365,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MTable[] processTable(Element tableContainer) {
 		String[] columns = getColumns(tableContainer);
-		List rows = tableContainer.getChildren(DATA);
+		List rows = tableContainer.elements(DATA);
 		MTable[] fieldMetadata = new MTable[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -381,7 +378,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachUpdate(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_UPDATE);
+		List containers = root.elements(CONTAINER_UPDATE);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MClass parent = metadata.getMClass(getNonNullAttribute(container, ATTRIBUTE_RESOURCE), getNonNullAttribute(
@@ -395,7 +392,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MUpdate[] processUpdate(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MUpdate[] updates = new MUpdate[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -408,7 +405,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachUpdateType(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_UPDATETYPE);
+		List containers = root.elements(CONTAINER_UPDATETYPE);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MUpdate parent = metadata.getUpdate(getNonNullAttribute(container, ATTRIBUTE_RESOURCE),
@@ -422,7 +419,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MUpdateType[] processUpdateType(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MUpdateType[] updateTypes = new MUpdateType[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -435,7 +432,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachObject(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_OBJECT);
+		List containers = root.elements(CONTAINER_OBJECT);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MResource parent = metadata.getResource(getNonNullAttribute(container, ATTRIBUTE_RESOURCE));
@@ -448,7 +445,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MObject[] processObject(Element objectContainer) {
 		String[] columns = getColumns(objectContainer);
-		List rows = objectContainer.getChildren(DATA);
+		List rows = objectContainer.elements(DATA);
 		MObject[] objects = new MObject[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -461,7 +458,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachSearchHelp(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_SEARCHHELP);
+		List containers = root.elements(CONTAINER_SEARCHHELP);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MResource parent = metadata.getResource(getNonNullAttribute(container, ATTRIBUTE_RESOURCE));
@@ -474,7 +471,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MSearchHelp[] processSearchHelp(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MSearchHelp[] searchHelps = new MSearchHelp[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -487,7 +484,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachEditMask(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_EDITMASK);
+		List containers = root.elements(CONTAINER_EDITMASK);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MResource parent = metadata.getResource(getNonNullAttribute(container, ATTRIBUTE_RESOURCE));
@@ -500,7 +497,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MEditMask[] processEditMask(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MEditMask[] editMasks = new MEditMask[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -513,7 +510,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachLookup(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_LOOKUP);
+		List containers = root.elements(CONTAINER_LOOKUP);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MResource parent = metadata.getResource(getNonNullAttribute(container, ATTRIBUTE_RESOURCE));
@@ -526,7 +523,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MLookup[] processLookup(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MLookup[] lookups = new MLookup[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -539,7 +536,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachLookupType(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_LOOKUPTYPE);
+		List containers = root.elements(CONTAINER_LOOKUPTYPE);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MLookup parent = metadata.getLookup(getNonNullAttribute(container, ATTRIBUTE_RESOURCE),
@@ -559,7 +556,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MLookupType[] processLookupType(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MLookupType[] lookupTypes = new MLookupType[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -572,7 +569,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachValidationLookup(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_VALIDATIONLOOKUP);
+		List containers = root.elements(CONTAINER_VALIDATIONLOOKUP);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MResource parent = metadata.getResource(getNonNullAttribute(container, ATTRIBUTE_RESOURCE));
@@ -585,7 +582,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MValidationLookup[] processValidationLookup(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MValidationLookup[] validationLookups = new MValidationLookup[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -598,7 +595,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachValidationLookupType(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_VALIDATIONLOOKUPTYPE);
+		List containers = root.elements(CONTAINER_VALIDATIONLOOKUPTYPE);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MValidationLookup parent = metadata.getValidationLookup(getNonNullAttribute(container, ATTRIBUTE_RESOURCE),
@@ -612,7 +609,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MValidationLookupType[] processValidationLookupType(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MValidationLookupType[] validationLookupTypes = new MValidationLookupType[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -625,10 +622,10 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachValidationExternal(Metadata metadata, Element root) {
-		List containers = root.getChildren(CONTAINER_VALIDATIONEXTERNAL);
+		List containers = root.elements(CONTAINER_VALIDATIONEXTERNAL);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
-			MResource parent = metadata.getResource(container.getAttributeValue(ATTRIBUTE_RESOURCE));
+			MResource parent = metadata.getResource(container.attributeValue(ATTRIBUTE_RESOURCE));
 			MValidationExternal[] validationExternals = processValidationExternal(container);
 			for (int j = 0; j < validationExternals.length; j++) {
 				parent.addChild(MetadataType.VALIDATION_EXTERNAL, validationExternals[j]);
@@ -638,7 +635,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MValidationExternal[] processValidationExternal(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MValidationExternal[] validationExternals = new MValidationExternal[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -651,7 +648,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachValidationExternalType(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_VALIDATIONEXTERNALTYPE);
+		List containers = root.elements(CONTAINER_VALIDATIONEXTERNALTYPE);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MValidationExternal parent = metadata.getValidationExternal(getNonNullAttribute(container,
@@ -665,7 +662,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MValidationExternalType[] processValidationExternalType(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MValidationExternalType[] validationExternalTypes = new MValidationExternalType[rows.size()];
 		for (int i = 0; i < rows.size(); i++) {
 			Element element = (Element) rows.get(i);
@@ -678,7 +675,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 	}
 
 	private void attachValidationExpression(Metadata metadata, Element root) throws MetaParseException {
-		List containers = root.getChildren(CONTAINER_VALIDATIONEXPRESSION);
+		List containers = root.elements(CONTAINER_VALIDATIONEXPRESSION);
 		for (int i = 0; i < containers.size(); i++) {
 			Element container = (Element) containers.get(i);
 			MResource parent = metadata.getResource(getNonNullAttribute(container, ATTRIBUTE_RESOURCE));
@@ -691,7 +688,7 @@ public class JDomCompactBuilder extends MetadataBuilder {
 
 	private MValidationExpression[] processValidationExpression(Element container) {
 		String[] columns = getColumns(container);
-		List rows = container.getChildren(DATA);
+		List rows = container.elements(DATA);
 		MValidationExpression[] expressions = new MValidationExpression[rows.size()];
 		for (int i = 0; i < expressions.length; i++) {
 			Element element = (Element) rows.get(i);

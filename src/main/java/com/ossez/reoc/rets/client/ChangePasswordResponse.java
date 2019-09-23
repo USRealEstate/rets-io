@@ -1,10 +1,11 @@
 package com.ossez.reoc.rets.client;
 
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
 import java.io.InputStream;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
 
 /**
  * dbt is lame and hasn't overridden the default
@@ -12,10 +13,10 @@ import org.jdom.input.SAXBuilder;
  */
 public class ChangePasswordResponse {
 	public ChangePasswordResponse(InputStream stream) throws RetsException {
-		SAXBuilder builder = new SAXBuilder();
+		SAXReader builder = new SAXReader();
 		Document document = null;
 		try {
-			document = builder.build(stream);
+			document = builder.read(stream);
 		} catch (Exception e) {
 			throw new RetsException(e);
 		}
@@ -24,11 +25,11 @@ public class ChangePasswordResponse {
 			throw new RetsException("Invalid Change Password Response");
 		}
 
-		int replyCode = Integer.parseInt(rets.getAttributeValue("ReplyCode"));
+		int replyCode = Integer.parseInt(rets.attributeValue("ReplyCode"));
 		if (replyCode != 0) {
 			InvalidReplyCodeException exception;
 			exception = new InvalidReplyCodeException(replyCode);
-			exception.setRemoteMessage(rets.getAttributeValue("ReplyText"));
+			exception.setRemoteMessage(rets.attributeValue("ReplyText"));
 			throw exception;
 		}
 	}

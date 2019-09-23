@@ -13,9 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
 import com.ossez.reoc.rets.common.metadata.types.MClass;
 import com.ossez.reoc.rets.common.metadata.types.MEditMask;
 import com.ossez.reoc.rets.common.metadata.types.MForeignKey;
@@ -34,6 +31,9 @@ import com.ossez.reoc.rets.common.metadata.types.MValidationExternal;
 import com.ossez.reoc.rets.common.metadata.types.MValidationExternalType;
 import com.ossez.reoc.rets.common.metadata.types.MValidationLookup;
 import com.ossez.reoc.rets.common.metadata.types.MValidationLookupType;
+import org.dom4j.Attribute;
+import org.dom4j.Document;
+import org.dom4j.Element;
 
 /** Parses apart a complete Standard-XML response, returns a Metadata object */
 public class JDomStandardBuilder extends MetadataBuilder {
@@ -105,7 +105,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 		expectElement(element, CONTAINER_ROOT);
 		Element container = getElement(element, CONTAINER_METADATA);
 		boolean recurse = checkForRecursion(container);
-		List list = container.getChildren();
+		List list = container.elements();
 		if (list.size() == 0) {
 			return null;
 		}
@@ -130,15 +130,15 @@ public class JDomStandardBuilder extends MetadataBuilder {
 		 * we fall all the way to the end then there probably wasn't that
 		 * much to look through.
 		 */
-		Iterator children = top.getChildren().iterator();
+		Iterator children = top.elements().iterator();
 		while (children.hasNext()) {
 			/* each of these is a container (METADATA-*) type */
 			Element element = (Element) children.next();
-			Iterator iterator = element.getChildren().iterator();
+			Iterator iterator = element.elements().iterator();
 			while (iterator.hasNext()) {
 				/* each of these is an item element */
 				Element child = (Element) iterator.next();
-				Iterator subtypes = child.getChildren().iterator();
+				Iterator subtypes = child.elements().iterator();
 				while (subtypes.hasNext()) {
 					Element subtype = (Element) subtypes.next();
 					if (subtype.getName().startsWith(CONTAINER_PREFIX)) {
@@ -155,7 +155,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 		if (type == null) {
 			throw new RuntimeException("no matching type for container " + container.getName());
 		}
-		List elements = container.getChildren((String) sType2Element.get(type));
+		List elements = container.elements((String) sType2Element.get(type));
 		String path = getPath(container);
 		List output = null;
 		if (parent == null) {
@@ -185,7 +185,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 				MetadataType[] childTypes = obj.getChildTypes();
 				for (int j = 0; j < childTypes.length; j++) {
 					MetadataType childType = childTypes[j];
-					Element childContainer = element.getChild(CONTAINER_PREFIX + childType.name());
+					Element childContainer = element.element(CONTAINER_PREFIX + childType.name());
 					if (childContainer == null) {
 						obj.addChild(childType, null);
 					} else {
@@ -201,27 +201,27 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	String getPath(Element container) {
-		String resource = container.getAttributeValue(ATTRIBUTE_RESOURCEID);
+		String resource = container.attributeValue(ATTRIBUTE_RESOURCEID);
 		if (resource == null) {
 			return null;
 		}
-		String classname = container.getAttributeValue(ATTRIBUTE_CLASSNAME);
+		String classname = container.attributeValue(ATTRIBUTE_CLASSNAME);
 		if (classname != null) {
-			String update = container.getAttributeValue(ATTRIBUTE_UPDATE);
+			String update = container.attributeValue(ATTRIBUTE_UPDATE);
 			if (update != null) {
 				return resource + ":" + classname + ":" + update;
 			}
 			return resource + ":" + classname;
 		}
-		String lookup = container.getAttributeValue(ATTRIBUTE_LOOKUP);
+		String lookup = container.attributeValue(ATTRIBUTE_LOOKUP);
 		if (lookup != null) {
 			return resource + ":" + lookup;
 		}
-		String vallkp = container.getAttributeValue(ATTRIBUTE_VALIDATIONLOOKUP);
+		String vallkp = container.attributeValue(ATTRIBUTE_VALIDATIONLOOKUP);
 		if (vallkp != null) {
 			return resource + ":" + vallkp;
 		}
-		String vale = container.getAttributeValue(ATTRIBUTE_VALIDATIONEXTERNAL);
+		String vale = container.attributeValue(ATTRIBUTE_VALIDATIONEXTERNAL);
 		if (vale != null) {
 			return resource + ":" + vale;
 		}
@@ -237,7 +237,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private Element getElement(Element parent, String type) throws MetadataException {
-		Element element = parent.getChild(type);
+		Element element = parent.element(type);
 		if (element == null) {
 			throw new MetadataException("Missing element " + type);
 		}
@@ -253,7 +253,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 
 	private void setAttributes(MetaObject obj, Element el) {
 
-		List children = el.getChildren();
+		List children = el.elements();
 		for (int i = 0; i < children.size(); i++) {
 			Element child = (Element) children.get(i);
 			String name = child.getName();
@@ -269,7 +269,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	//when atrributes from the xml element are needed
 	public void setAttributesFromXMLAttr(MetaObject obj, Element el) {
 		
-		Iterator attrIter = el.getParentElement().getAttributes().iterator();
+		Iterator attrIter = el.getParent().attributes().iterator();
 		
 		while(attrIter.hasNext()){
 			Attribute attr = (Attribute) attrIter.next();
@@ -293,20 +293,20 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private MSystem processSystem(Element container) {
-		Element element = container.getChild(ELEMENT_SYSTEM);
+		Element element = container.element(ELEMENT_SYSTEM);
 		if (element == null){
-			element = container.getChild(ELEMENT_SYSTEM.toUpperCase());
+			element = container.element(ELEMENT_SYSTEM.toUpperCase());
 		}
 		MSystem system = buildSystem();
 		init(system);
 		setAttributesFromXMLAttr(system, element);
 		setAttributes(system, element);
 		Element child;
-		child = element.getChild(CONTAINER_RESOURCE);
+		child = element.element(CONTAINER_RESOURCE);
 		if (child != null) {
 			processResource(system, child);
 		}
-		child = element.getChild(CONTAINER_FOREIGNKEY);
+		child = element.element(CONTAINER_FOREIGNKEY);
 		if (child != null) {
 			processForeignKey(system, child);
 		}
@@ -314,7 +314,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processResource(MSystem system, Element container) {
-		List resources = container.getChildren(ELEMENT_RESOURCE);
+		List resources = container.elements(ELEMENT_RESOURCE);
 		for (int i = 0; i < resources.size(); i++) {
 			Element element = (Element) resources.get(i);
 			MResource resource = buildResource();
@@ -322,39 +322,39 @@ public class JDomStandardBuilder extends MetadataBuilder {
 			setAttributes(resource, element);
 			system.addChild(MetadataType.RESOURCE, resource);
 			Element child;
-			child = element.getChild(CONTAINER_CLASS);
+			child = element.element(CONTAINER_CLASS);
 			if (child != null) {
 				processClass(resource, child);
 			}
-			child = element.getChild(CONTAINER_OBJECT);
+			child = element.element(CONTAINER_OBJECT);
 			if (child != null) {
 				processObject(resource, child);
 			}
-			child = element.getChild(CONTAINER_SEARCH_HELP);
+			child = element.element(CONTAINER_SEARCH_HELP);
 			if (child != null) {
 				processSearchHelp(resource, child);
 			}
-			child = element.getChild(CONTAINER_EDITMASK);
+			child = element.element(CONTAINER_EDITMASK);
 			if (child != null) {
 				processEditMask(resource, child);
 			}
-			child = element.getChild(CONTAINER_LOOKUP);
+			child = element.element(CONTAINER_LOOKUP);
 			if (child != null) {
 				processLookup(resource, child);
 			}
-			child = element.getChild(CONTAINER_UPDATEHELP);
+			child = element.element(CONTAINER_UPDATEHELP);
 			if (child != null) {
 				processUpdateHelp(resource, child);
 			}
-			child = element.getChild(CONTAINER_VALIDATIONLOOKUP);
+			child = element.element(CONTAINER_VALIDATIONLOOKUP);
 			if (child != null) {
 				processValidationLookup(resource, child);
 			}
-			child = element.getChild(CONTAINER_VALIDATIONEXPRESSION);
+			child = element.element(CONTAINER_VALIDATIONEXPRESSION);
 			if (child != null) {
 				processValidationExpression(resource, child);
 			}
-			child = element.getChild(CONTAINER_VALIDATIONEXTERNAL);
+			child = element.element(CONTAINER_VALIDATIONEXTERNAL);
 			if (child != null) {
 				processValidationExternal(resource, child);
 			}
@@ -362,7 +362,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processEditMask(MResource parent, Element container) {
-		List elements = container.getChildren(ELEMENT_EDITMASK);
+		List elements = container.elements(ELEMENT_EDITMASK);
 		for (int i = 0; i < elements.size(); i++) {
 			Element element = (Element) elements.get(i);
 			MEditMask mask = buildEditMask();
@@ -372,8 +372,8 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processLookup(MResource parent, Element container) {
-		List elements15 = container.getChildren(ELEMENT_LOOKUP);
-		List elements17 = container.getChildren(ELEMENT_LOOKUPTYPE);
+		List elements15 = container.elements(ELEMENT_LOOKUP);
+		List elements17 = container.elements(ELEMENT_LOOKUPTYPE);
 		List elements;
 	//some Rets Servers have lookuptype and lookup elements interchanged
 		if (elements15.isEmpty()){
@@ -387,7 +387,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 			init(lookup);
 			setAttributes(lookup, element);
 			parent.addChild(MetadataType.LOOKUP, lookup);
-			Element child = element.getChild(CONTAINER_LOOKUPTYPE);
+			Element child = element.element(CONTAINER_LOOKUPTYPE);
 			if (child != null) {
 				processLookupType(lookup, child);
 			}
@@ -396,8 +396,8 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	
 	private void processLookupType(MLookup parent, Element container) {
 		
-		List elements15 = container.getChildren(ELEMENT_LOOKUPTYPE);// check spec 
-		List elements17 = container.getChildren(ELEMENT_LOOKUP);
+		List elements15 = container.elements(ELEMENT_LOOKUPTYPE);// check spec
+		List elements17 = container.elements(ELEMENT_LOOKUP);
 		List elements;
 		//some Rets Servers have lookuptype and lookup elements interchanged
 		if (elements15.isEmpty()){
@@ -414,7 +414,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processUpdateHelp(MResource parent, Element container) {
-		List elements = container.getChildren(ELEMENT_UPDATEHELP);
+		List elements = container.elements(ELEMENT_UPDATEHELP);
 		for (int i = 0; i < elements.size(); i++) {
 			Element element = (Element) elements.get(i);
 			MUpdateHelp help = buildUpdateHelp();
@@ -424,14 +424,14 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processValidationLookup(MResource parent, Element container) {
-		List elements = container.getChildren(ELEMENT_VALIDATIONLOOKUP);
+		List elements = container.elements(ELEMENT_VALIDATIONLOOKUP);
 		for (int i = 0; i < elements.size(); i++) {
 			Element element = (Element) elements.get(i);
 			MValidationLookup lookup = buildValidationLookup();
 			init(lookup);
 			setAttributes(lookup, element);
 			parent.addChild(MetadataType.VALIDATION_LOOKUP, lookup);
-			Element child = element.getChild(CONTAINER_VALIDATIONLOOKUPTYPE);
+			Element child = element.element(CONTAINER_VALIDATIONLOOKUPTYPE);
 			if (child != null) {
 				processValidationLookupType(lookup, child);
 			}
@@ -439,7 +439,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processValidationLookupType(MValidationLookup parent, Element container) {
-		List elements = container.getChildren(ELEMENT_VALIDATIONLOOKUPTYPE);
+		List elements = container.elements(ELEMENT_VALIDATIONLOOKUPTYPE);
 		for (int i = 0; i < elements.size(); i++) {
 			Element element = (Element) elements.get(i);
 			MValidationLookupType lookupType = buildValidationLookupType();
@@ -449,7 +449,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processValidationExpression(MResource parent, Element container) {
-		List elements = container.getChildren(ELEMENT_VALIDATIONEXPRESSION);
+		List elements = container.elements(ELEMENT_VALIDATIONEXPRESSION);
 		for (int i = 0; i < elements.size(); i++) {
 			Element element = (Element) elements.get(i);
 			MValidationExpression expression = buildValidationExpression();
@@ -459,14 +459,14 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processValidationExternal(MResource parent, Element container) {
-		List elements = container.getChildren(ELEMENT_VALIDATIONEXTERNAL);
+		List elements = container.elements(ELEMENT_VALIDATIONEXTERNAL);
 		for (int i = 0; i < elements.size(); i++) {
 			Element element = (Element) elements.get(i);
 			MValidationExternal external = buildValidationExternal();
 			init(external);
 			setAttributes(external, element);
 			parent.addChild(MetadataType.VALIDATION_EXTERNAL, external);
-			Element child = element.getChild(CONTAINER_VALIDATIONEXTERNALTYPE);
+			Element child = element.element(CONTAINER_VALIDATIONEXTERNALTYPE);
 			if (child != null) {
 				processValidationExternalType(external, child);
 			}
@@ -474,7 +474,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processValidationExternalType(MValidationExternal parent, Element container) {
-		List elements = container.getChildren(ELEMENT_VALIDATIONEXTERNALTYPE);
+		List elements = container.elements(ELEMENT_VALIDATIONEXTERNALTYPE);
 		for (int i = 0; i < elements.size(); i++) {
 			Element element = (Element) elements.get(i);
 			MValidationExternalType type = buildValidationExternalType();
@@ -484,7 +484,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processSearchHelp(MResource parent, Element container) {
-		List searchhelps = container.getChildren(ELEMENT_SEARCHHELP);
+		List searchhelps = container.elements(ELEMENT_SEARCHHELP);
 		for (int i = 0; i < searchhelps.size(); i++) {
 			Element element = (Element) searchhelps.get(i);
 			MSearchHelp searchhelp = buildSearchHelp();
@@ -494,7 +494,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processObject(MResource parent, Element container) {
-		List objects = container.getChildren(ELEMENT_OBJECT);
+		List objects = container.elements(ELEMENT_OBJECT);
 		for (int i = 0; i < objects.size(); i++) {
 			Element element = (Element) objects.get(i);
 			MObject obj = buildObject();
@@ -504,7 +504,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processClass(MResource parent, Element container) {
-		List classes = container.getChildren(ELEMENT_CLASS);
+		List classes = container.elements(ELEMENT_CLASS);
 		for (int i = 0; i < classes.size(); i++) {
 			Element element = (Element) classes.get(i);
 			MClass clazz = buildClass();
@@ -512,11 +512,11 @@ public class JDomStandardBuilder extends MetadataBuilder {
 			setAttributes(clazz, element);
 			parent.addChild(MetadataType.CLASS, clazz);
 			Element child;
-			child = element.getChild(CONTAINER_TABLE);
+			child = element.element(CONTAINER_TABLE);
 			if (child != null) {
 				processTable(clazz, child);
 			}
-			child = element.getChild(CONTAINER_UPDATE);
+			child = element.element(CONTAINER_UPDATE);
 			if (child != null) {
 				processUpdate(clazz, child);
 			}
@@ -524,7 +524,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processTable(MClass parent, Element container) {
-		List tables = container.getChildren(ELEMENT_TABLE);
+		List tables = container.elements(ELEMENT_TABLE);
 		for (int i = 0; i < tables.size(); i++) {
 			Element element = (Element) tables.get(i);
 			MTable table = buildTable();
@@ -534,14 +534,14 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processUpdate(MClass parent, Element container) {
-		List updates = container.getChildren(ELEMENT_UPDATE);
+		List updates = container.elements(ELEMENT_UPDATE);
 		for (int i = 0; i < updates.size(); i++) {
 			Element element = (Element) updates.get(i);
 			MUpdate update = buildUpdate();
 			init(update);
 			setAttributes(update, element);
 			parent.addChild(MetadataType.UPDATE, update);
-			Element child = element.getChild(CONTAINER_UPDATE_TYPE);
+			Element child = element.element(CONTAINER_UPDATE_TYPE);
 			if (child != null) {
 				processUpdateType(update, child);
 			}
@@ -549,7 +549,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processUpdateType(MUpdate parent, Element container) {
-		List updateFields = container.getChildren(ELEMENT_UPDATETYPE);
+		List updateFields = container.elements(ELEMENT_UPDATETYPE);
 		for (int i = 0; i < updateFields.size(); i++) {
 			Element element = (Element) updateFields.get(i);
 			MUpdateType updateType = buildUpdateType();
@@ -559,7 +559,7 @@ public class JDomStandardBuilder extends MetadataBuilder {
 	}
 
 	private void processForeignKey(MSystem system, Element container) {
-		List fkeys = container.getChildren("ForeignKey");
+		List fkeys = container.elements("ForeignKey");
 		for (int i = 0; i < fkeys.size(); i++) {
 			Element element = (Element) fkeys.get(i);
 			MForeignKey foreignKey = buildForeignKey();

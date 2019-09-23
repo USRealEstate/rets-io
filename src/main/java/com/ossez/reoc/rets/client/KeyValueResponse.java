@@ -1,21 +1,21 @@
 package com.ossez.reoc.rets.client;
 
-import java.util.List;
-import java.util.StringTokenizer;
-import java.io.InputStream;
-import java.io.IOException;
-
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Document;
-import org.jdom.input.SAXBuilder;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
+import java.io.InputStream;
+import java.util.List;
+import java.util.StringTokenizer;
+
+/**
+ *
+ */
 abstract public class KeyValueResponse {
 	protected static final String CRLF = "\r\n";
 	private static final Log LOG = LogFactory.getLog(KeyValueResponse.class);
@@ -30,14 +30,14 @@ abstract public class KeyValueResponse {
 
 	public void parse(InputStream stream, RetsVersion mVersion) throws RetsException {
 		try {
-			SAXBuilder builder = new SAXBuilder();
-			this.mDoc = builder.build(stream);
+			SAXReader builder = new SAXReader();
+			this.mDoc = builder.read(stream);
 			Element retsElement = this.mDoc.getRootElement();
 			if (!retsElement.getName().equals("RETS")) {
 				throw new RetsException("Expecting RETS");
 			}
 
-			int replyCode = NumberUtils.toInt(retsElement.getAttributeValue("ReplyCode"));
+			int replyCode = NumberUtils.toInt(retsElement.attributeValue("ReplyCode"));
 			this.mReplyCode = replyCode;
 			if (!isValidReplyCode(replyCode)) {
 				throw new InvalidReplyCodeException(replyCode);
@@ -46,7 +46,7 @@ abstract public class KeyValueResponse {
 			if (RetsVersion.RETS_10.equals(mVersion)) {
 				capabilityContainer = retsElement;
 			} else {
-				List children = retsElement.getChildren();
+				List children = retsElement.elements();
 				if (children.size() != 1) {
 					throw new RetsException("Invalid number of children: " + children.size());
 				}
@@ -58,9 +58,7 @@ abstract public class KeyValueResponse {
 				}
 			}
 			this.handleRetsResponse(capabilityContainer);
-		} catch (JDOMException e) {
-			throw new RetsException(e);
-		} catch (IOException e) {
+		} catch (DocumentException e) {
 			throw new RetsException(e);
 		}
 	}

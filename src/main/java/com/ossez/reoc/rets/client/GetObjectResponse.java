@@ -10,10 +10,11 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.http.HeaderElement;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicHeaderValueParser;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+import org.w3c.dom.DOMException;
 
 public class GetObjectResponse{
 	private static final int DEFAULT_BUFFER_SIZE = 8192;
@@ -59,11 +60,11 @@ public class GetObjectResponse{
 	        try {
 	        	// GetObjectResponse is empty, because we have a Rets ReplyCode
 	        	this.emptyResponse = true;
-	            SAXBuilder builder = new SAXBuilder();
-	            Document mDocument = builder.build(in);
+	            SAXReader builder = new SAXReader();
+	            Document mDocument = builder.read(in);
 	            Element root = mDocument.getRootElement();
 	            if (root.getName().equals("RETS")) {
-	                replyCode = NumberUtils.toInt(root.getAttributeValue("ReplyCode"));
+	                replyCode = NumberUtils.toInt(root.attributeValue("ReplyCode"));
 	                
 	                // success
 					if (ReplyCode.SUCCESS.equals(replyCode)) return;
@@ -76,12 +77,10 @@ public class GetObjectResponse{
 	            // no other possibilities
             	throw new RetsException("Malformed response [multipart="+this.isMultipart+", content-type=text/xml]. " +
             			"Content id did not exist in response and response was not valid rets response.");
-	        } catch (JDOMException e) {
-	            throw new RetsException(e);
-	        } catch (IOException e) {
+	        } catch (DocumentException e) {
 	            throw new RetsException(e);
 	        }
-	    }
+		}
 	}
 
 	public String getType() {
