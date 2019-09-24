@@ -8,6 +8,9 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ *
+ */
 public class CapabilityUrls {
 	public static final String ACTION_URL = "Action";
 	public static final String CHANGE_PASSWORD_URL = "ChangePassword";
@@ -79,6 +82,10 @@ public class CapabilityUrls {
 		return getCapabilityUrl(GET_OBJECT_URL);
 	}
 
+	/**
+	 *
+	 * @param url
+	 */
 	public void setLoginUrl(String url) {
 		if (this.mUrl == null) {
 			try {
