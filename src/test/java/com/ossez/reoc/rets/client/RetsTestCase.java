@@ -1,13 +1,72 @@
 package com.ossez.reoc.rets.client;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Properties;
 
 import junit.framework.TestCase;
+import org.apache.commons.io.IOUtils;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
+/**
+ *
+ * @author YuCheng Hu
+ */
 public abstract class RetsTestCase extends TestCase {
+
+	public Properties props = new Properties();
+	public String retsLoginUrl;
+	public String retsUsername;
+	public String retsPassword;
+
+	@BeforeClass
+	public void setUp() throws IOException {
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		props.load(loader.getResourceAsStream("rets.properties"));
+
+		retsLoginUrl = props.getProperty("rets_loginUrl");
+		retsUsername = props.getProperty("rets_username");
+		retsPassword = props.getProperty("rets_password");
+	}
+
+	/**
+	 * Get Resource from file
+	 * @param name
+	 * @return
+	 */
 	protected static InputStream getResource(String name) {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
-		return cl.getResourceAsStream("org/realtors/rets/client/" + name);
+		return cl.getResourceAsStream(name);
+	}
+
+	/**
+	 *
+	 * @param urlStr
+	 * @return
+	 */
+	protected static InputStream getResourceFromURL(String urlStr) {
+
+		try {
+//			in = new URL( "" ).openStream();
+			URL oracle = new URL("https://cdn.ossez.com/reso/rets-1x/login/login_response_valid_1.0.xml");
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(oracle.openStream()));
+
+			String inputLine;
+			while ((inputLine = in.readLine()) != null)
+				System.out.println(inputLine);
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null
+				;
 	}
 
 	public void assertEquals(String message, Object[] expected, Object[] actual) {
