@@ -29,7 +29,7 @@ configurations {
 
 dependencies {
     // LOG
-    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
 
     // APACHE
     compile group: 'commons-logging', name: 'commons-logging', version: '1.1.1'
