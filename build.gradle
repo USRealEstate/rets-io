@@ -8,6 +8,9 @@ apply plugin: 'java'
 group = 'com.ossez.rets-io'
 version = '0.1.1'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 allprojects {
     repositories {
         maven { url "https://maven.ossez.com/repository/internal" }
