@@ -19,7 +19,9 @@ import java.util.List;
 import static com.ossez.reoc.rets.client.CapabilityUrls.LOGIN_URL;
 
 /**
+ * Process key and Value
  *
+ * @author YuCheng Hu
  */
 abstract public class KeyValueResponse {
     protected static final String CRLF = "\r\n";
