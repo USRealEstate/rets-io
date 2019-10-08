@@ -1,17 +1,20 @@
 package com.ossez.reoc.rets.client;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  *
  */
 public class CapabilityUrls {
+
+	private final static Logger logger = LoggerFactory.getLogger(CapabilityUrls.class);
+
 	public static final String ACTION_URL = "Action";
 	public static final String CHANGE_PASSWORD_URL = "ChangePassword";
 	public static final String GET_OBJECT_URL = "GetObject";
@@ -22,7 +25,6 @@ public class CapabilityUrls {
 	public static final String GET_METADATA_URL = "GetMetadata";
 	public static final String UPDATE_URL = "Update";
 	public static final String SERVER_INFO_URL = "ServerInformation";// for rets 1.7
-	private static final Log LOG = LogFactory.getLog(CapabilityUrls.class);
 	
 	private final Map mCapabilityUrls;
 	private URL mUrl;
@@ -41,13 +43,13 @@ public class CapabilityUrls {
 			try {
 				String newurl = new URL(this.mUrl, url).toString();
 				if (!newurl.equals(url)) {
-					LOG.info("qualified " + capability + "  URL different: "
+					logger.info("qualified " + capability + "  URL different: "
 							+ url + " -> " + newurl);
 					url = newurl;
 				}
 
 			} catch (MalformedURLException e) {
-				LOG.warn("Couldn't normalize URL", e);
+				logger.warn("Couldn't normalize URL", e);
 			}
 		}
 		this.mCapabilityUrls.put(capability, url);
@@ -91,7 +93,7 @@ public class CapabilityUrls {
 			try {
 				this.mUrl = new URL(url);
 			} catch (MalformedURLException e) {
-				LOG.debug("java.net.URL can't parse login url: " + url);
+				logger.debug("java.net.URL can't parse login url: " + url);
 				this.mUrl = null;
 			}
 		}

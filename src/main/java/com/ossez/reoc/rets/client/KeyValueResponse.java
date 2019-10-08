@@ -4,14 +4,17 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.ossez.reoc.rets.client.CapabilityUrls.LOGIN_URL;
 
@@ -20,7 +23,7 @@ import static com.ossez.reoc.rets.client.CapabilityUrls.LOGIN_URL;
  */
 abstract public class KeyValueResponse {
     protected static final String CRLF = "\r\n";
-    private static final Log LOG = LogFactory.getLog(KeyValueResponse.class);
+    private static final Logger logger = LoggerFactory.getLogger(KeyValueResponse.class);
 
     protected Document mDoc;
     protected int mReplyCode;
@@ -85,43 +88,26 @@ abstract public class KeyValueResponse {
             String[] splits = StringUtils.split(keyValueStr, "=");
             if (!ArrayUtils.isEmpty(splits) && splits.length > 1) {
                 String key = StringUtils.trimToNull(splits[0]);
-                // guard against a missing value in a KeyValueResponse
                 String value = StringUtils.trimToEmpty(splits[1]);
 
+                // PROCESS LOGIN_URL
                 if (StringUtils.equalsIgnoreCase(LOGIN_URL, key))
                     retsResponseMap.put(LOGIN_URL, value);
                 else
                     retsResponseMap.put(key, value);
             }
-//            // LOOP TO LOAD LOGIN URL
-//            tokenizeList.parallelStream().forEach(keyValueString -> {
-//
-//                //parallelStream
-//                try {
-//                    String line = StringUtils.trimToEmpty(keyValueString);
-//                    String splits[] = StringUtils.split(line, "=");
-//                    if (!ArrayUtils.isEmpty(splits) && splits.length > 1) {
-//                        String key = StringUtils.trimToNull(splits[0]);
-//                        // guard against a missing value in a KeyValueResponse
-//                        String value = StringUtils.trimToEmpty(splits[1]);
-//
-//                        if (StringUtils.equalsIgnoreCase(LOGIN_URL, key))
-//                            retsResponseMap.put(LOGIN_URL, value);
-//                        else
-//                            retsResponseMap.put(key, value);
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            });
 
-            // LOOP TO LOAD OTHERS
-            this.handleKeyValue(LOGIN_URL, retsResponseMap.get(LOGIN_URL));
-
-            for (String k : retsResponseMap.keySet()) {
-                this.handleKeyValue(k, retsResponseMap.get(k));
-            }
         }
+
+        retsResponseMap.entrySet().parallelStream().forEach(entry -> {
+            try {
+                this.handleKeyValue(entry.getKey(), entry.getValue());
+            } catch (RetsException ex) {
+                logger.warn("Unable process rests login response value", ex);
+            }
+        });
+
+
     }
 
     protected abstract void handleKeyValue(String key, String value) throws RetsException;
