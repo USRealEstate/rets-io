@@ -1,6 +1,12 @@
 reoc-mls-client
 =================
 
+You can Subscribe us by scan QR below:
+
+ image::https://cdn.ossez.com/img/cwikius/cwikus.jpg[]
+ 
+
+
 The REoC RETS Client - Java is a library used to access data on RETS compliant servers.
 
 This is a fork of the [jrets](https://github.com/jpfielding/jrets) master branch, which it self is a fork of the [CART RETS client](http://cart.sourceforge.net/).
