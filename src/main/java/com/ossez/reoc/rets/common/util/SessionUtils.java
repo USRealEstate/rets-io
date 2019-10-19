@@ -27,7 +27,7 @@ public final class SessionUtils {
      * @param retsPassword
      * @return
      */
-    public static RetsSession retsLogin(String retsLoginUrl, String retsUsername, String retsPassword, RetsVersion retsVersion) {
+    public static RetsSession retsLogin(String retsLoginUrl, String retsUsername, String retsPassword, RetsVersion retsVersion) throws RetsException {
         logger.debug("RETS Session Login URL: [{}]", retsLoginUrl);
 
         LoginResponse loginResponse = new LoginResponse();
@@ -48,7 +48,7 @@ public final class SessionUtils {
             //Login
             loginResponse = session.login(retsUsername, retsPassword);
         } catch (RetsException ex) {
-            logger.error("Login RETS Server Error", ex);
+            throw ex;
         }
 
         // SESSION NULL CHECK

@@ -33,9 +33,10 @@ public class LogoutResponseTest extends RetsTestCase {
 			LogoutResponse response = new LogoutResponse();
 			response.setStrict(true);
 			response.parse(getResource("logout_lower_case.xml"), RetsVersion.RETS_15);
-			fail("Should have thrown exception");
+
 		} catch (RetsException e) {
 			// Expected
+			fail("Should have thrown exception");
 		}
 	}
 	/*

@@ -93,9 +93,10 @@ abstract public class KeyValueResponse {
                 String value = StringUtils.trimToEmpty(splits[1]);
 
                 // PROCESS LOGIN_URL
-                if (StringUtils.equalsIgnoreCase(LOGIN_URL, key))
+                if (StringUtils.equalsIgnoreCase(LOGIN_URL, key)) {
                     retsResponseMap.put(LOGIN_URL, value);
-                else
+                    this.handleKeyValue(LOGIN_URL, value);
+                } else
                     retsResponseMap.put(key, value);
             }
 

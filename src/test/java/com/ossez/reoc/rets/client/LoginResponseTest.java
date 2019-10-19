@@ -1,10 +1,13 @@
 package com.ossez.reoc.rets.client;
 
 
+import org.junit.Test;
+
 public class LoginResponseTest extends RetsTestCase {
     /**
      * @throws RetsException
      */
+    @Test
     public void testValidLoginResponse17() throws RetsException {
         LoginResponse response = new LoginResponse();
         response.parse(getResource("login_response_valid_1.7.xml"), RetsVersion.RETS_17);
@@ -117,9 +120,10 @@ public class LoginResponseTest extends RetsTestCase {
         response.setStrict(true);
         try {
             response.parse(getResource("login_lower_case.xml"), RetsVersion.RETS_15);
-            fail("Should throw exception");
+
         } catch (RetsException e) {
             // Expected
+            fail("Should throw exception");
         }
     }
 }
