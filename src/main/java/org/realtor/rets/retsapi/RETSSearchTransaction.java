@@ -1,28 +1,25 @@
 package org.realtor.rets.retsapi;
 
-import org.apache.log4j.Category;
-
 import org.realtor.rets.util.AttributeExtracter;
 import org.realtor.rets.util.ResourceLocator;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.helpers.DefaultHandler;
-
-import java.io.ByteArrayInputStream;
-
-import java.util.HashMap;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import java.io.ByteArrayInputStream;
+import java.util.HashMap;
 
 
 /**
- *  RETSSearchTransaction.java
+ * RETSSearchTransaction.java
  *
- *  @author jbrush
- *  @version 1.0
+ * @author jbrush
+ * @version 1.0
  */
 public class RETSSearchTransaction extends RETSTransaction {
-    static Category cat = Category.getInstance(RETSSearchTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSSearchTransaction.class);
 
     //Required Arguments
     protected static final String SEARCHTYPE = "SearchType";
@@ -85,7 +82,7 @@ public class RETSSearchTransaction extends RETSTransaction {
 
             p.parse(bais, h, "file:/" + ResourceLocator.locate("dummy.dtd"));
         } catch (Exception e) {
-            cat.warn(e, e);
+            logger.warn("Hash Error:", e);
 
             return null;
         }
@@ -99,13 +96,13 @@ public class RETSSearchTransaction extends RETSTransaction {
         }
 
         String records = (String) hash.get("Records");
-        if ( records == null) {
+        if (records == null) {
             records = (String) hash.get("records");
         }
-        if ( records == null) {
+        if (records == null) {
             records = (String) hash.get("RECORDS");
         }
-        setCount( records);
+        setCount(records);
     }
 
     void processDelimiterTag(HashMap hash) {
