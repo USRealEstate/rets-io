@@ -5,12 +5,13 @@
  */
 package org.realtor.rets.retsapi;
 
-import com.aftexsw.util.bzip.CBZip2InputStream;
+//import com.aftexsw.util.bzip.CBZip2InputStream;
+
+import ch.qos.logback.classic.BasicConfigurator;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.log4j.BasicConfigurator;
 import org.realtor.rets.util.RETSConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,7 +131,7 @@ public class RETSConnection extends java.lang.Object {
                 log = new PrintWriter(new FileWriter(outFile));
                 log.println("<!-- RETS REQUEST -->");
             } catch (Exception e) {
-                cat.error("could create output file :" + outFile);
+                logger.error("could create output file :" + outFile);
             }
         }
 
@@ -191,7 +192,7 @@ public class RETSConnection extends java.lang.Object {
             }
         }
 
-        cat.debug(msg);
+        logger.debug(msg);
     }
 
     private void writeMapToTransactionLog(Map map) {
@@ -292,7 +293,7 @@ public class RETSConnection extends java.lang.Object {
 
         HttpMethod method = null;
 
-        cat.debug("getURLContent: URL=" + strURL);
+        logger.debug("getURLContent: URL=" + strURL);
 
         try {
             if (requestMethod.equalsIgnoreCase("GET")) {
@@ -427,10 +428,10 @@ public class RETSConnection extends java.lang.Object {
         try {
             serverUrl = transaction.getUrl();
 
-            cat.debug(transaction.getRequestType() + " URL : {" + serverUrl + "}");
+            logger.debug(transaction.getRequestType() + " URL : {" + serverUrl + "}");
 
             if (serverUrl == null) {
-                cat.error(transaction.getRequestType() + " URL is null");
+                logger.error(transaction.getRequestType() + " URL is null");
                 transaction.setResponseStatus("20036");
                 transaction.setResponseStatusText(transaction.getRequestType() + " URL is missing. Successful login is required.");
                 return; // throw exception here
@@ -442,7 +443,7 @@ public class RETSConnection extends java.lang.Object {
             if (transaction.getRequestType().equalsIgnoreCase("Action")) {
                 method = "GET";
             }
-            cat.debug("method: " + method);
+            logger.debug("method: " + method);
 
             InputStream is = getURLContent(serverUrl, method, transaction.getRequestMap());
 
@@ -458,7 +459,7 @@ public class RETSConnection extends java.lang.Object {
                 Object compressionFmt = responseHeaderMap.get("Content-Encoding");
 
                 if (compressionFmt != null) {
-                    cat.debug("Header class : " + compressionFmt.getClass().getName());
+                    logger.debug("Header class : " + compressionFmt.getClass().getName());
 
                     if (compressionFmt.toString().equalsIgnoreCase("[gzip]")) {
                         gzipCompressed = true;
@@ -470,7 +471,7 @@ public class RETSConnection extends java.lang.Object {
                 if (gzipCompressed) {
                     is = new GZIPInputStream(is);
                 } else if (bzipCompressed) {
-                    is = new CBZip2InputStream(is);
+//                    is = new CBZip2InputStream(is);
                 }
             }
             this.writeToTransactionLog("<!-- Obtained and Identified Response Stream -->");
@@ -568,7 +569,7 @@ public class RETSConnection extends java.lang.Object {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        BasicConfigurator.configure();
+//        BasicConfigurator.configure();
 
         RETSConnection rc = new RETSConnection();
         RETSLoginTransaction trans = new RETSLoginTransaction();
@@ -612,7 +613,7 @@ public class RETSConnection extends java.lang.Object {
             }
 
             String reqStr = key + "=" + URLEncoder.encode((String) requestMap.get(key));
-            cat.debug(reqStr);
+            logger.debug(reqStr);
             sb.append(reqStr);
 
             if (it.hasNext()) {

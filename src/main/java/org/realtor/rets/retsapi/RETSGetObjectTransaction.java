@@ -1,18 +1,17 @@
 package org.realtor.rets.retsapi;
 
-import org.apache.log4j.Category;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.Iterator;
-import java.util.Collection;
-import java.util.ArrayList;
-
-import javax.mail.internet.MimeMultipart;
+import javax.mail.MessagingException;
 import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeBodyPart;
-import javax.mail.MessagingException;
+import javax.mail.internet.MimeMultipart;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * RETSGetObjectTransaction.java
@@ -34,7 +33,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * send back only the location of the resource by calling {@link #setLocation}.
      */
 
-    static Category cat = Category.getInstance(RETSGetObjectTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSLoginTransaction.class);
     // collection of body parts resulting from the collision of the server response with the MIME parsing code.
 //    protected Collection fBodyParts;
     protected ArrayList parts;
@@ -63,7 +62,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * @param str resource value
      */
     public void setResource(String str) {
-        cat.debug("set Resource=" + str);
+        logger.debug("set Resource=" + str);
         setRequestVariable("Resource", str);
     }
 
@@ -73,7 +72,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * @param type type attribute value
      */
     public void setType(String str) {
-        cat.debug("set Type=" + str);
+        logger.debug("set Type=" + str);
         setRequestVariable("Type", str);
     }
 
@@ -84,10 +83,10 @@ public class RETSGetObjectTransaction extends RETSTransaction
      */
     public void setID(String str) {
         if ( str != null ) {
-            cat.debug("set ID=" + str.trim());
+            logger.debug("set ID=" + str.trim());
             setRequestVariable("ID", str.trim());
         } else {
-            cat.debug("set ID=" + str);
+            logger.debug("set ID=" + str);
         }
     }
 
@@ -97,7 +96,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * @param str location attribute value
      */
     public void setLocation(String str) {
-        cat.debug("set Location=" + str);
+        logger.debug("set Location=" + str);
         setRequestVariable("Location", str);
     }
 
@@ -133,13 +132,13 @@ public class RETSGetObjectTransaction extends RETSTransaction
         String mimeType;
 //        String contentType = responseHeaderNamed("content-type");
         String contentType = super.getResponseHeader("Content-Type");
-        cat.debug("====[RETSGetObjectTx] --> " + contentType);
+        logger.debug("====[RETSGetObjectTx] --> " + contentType);
         int contentTypeSemicolonIndex =
                 contentType == null ? -1 : contentType.indexOf(";");
 
         // If there was no Content-Type header, we can't do anything here. Punt to the default handler.
         if (contentType == null) {
-            cat.debug("====[RETSGetObjectTx] : NO CONTENT TYPE");
+            logger.debug("====[RETSGetObjectTx] : NO CONTENT TYPE");
             super.setResponseStream(responseStream);
             return;
         }
@@ -150,7 +149,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
         else
             mimeType = contentType.trim();
 
-        cat.debug("====[RETSGetObjectTx] : mime-type -> " + mimeType);
+        logger.debug("====[RETSGetObjectTx] : mime-type -> " + mimeType);
 
         // If the type is text/xml, then this is probably an error response.
         // We need to parse the input stream nondestructively to find out.
@@ -158,7 +157,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
             handleXMLStream(responseStream, mimeType, contentType);
         } else if (mimeType.startsWith("multipart/")) {
             // If it's multipart, take it apart and set up appropriate data structures.
-            cat.debug("====[RETSGetObjectTx] : RECIEVED MULTIPART");
+            logger.debug("====[RETSGetObjectTx] : RECIEVED MULTIPART");
             handleMultipartStream(responseStream, mimeType, contentType);
         } else {
             // Otherwise, since we do have a MIME type, assume that the response *is* object value.
@@ -228,7 +227,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
             setResponseStatus("0");
         } catch (MessagingException messagingException) {
             if (responseStreamDataSource != null)
-                cat.debug(responseStreamDataSource.bufferedDataAsString());
+                logger.debug(responseStreamDataSource.bufferedDataAsString());
 //                System.out.println(responseStreamDataSource.bufferedDataAsString());
 
             messagingException.printStackTrace();
@@ -338,7 +337,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
             if ( part != null ) {
                 Object content = part.getContent();
                 inputStream = (InputStream) content;
-                cat.debug("--- MimeBodyPart Content--> " + content);
+                logger.debug("--- MimeBodyPart Content--> " + content);
             }
         } catch (Exception e) {
             e.printStackTrace();
