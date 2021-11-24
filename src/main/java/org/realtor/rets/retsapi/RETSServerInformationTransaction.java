@@ -8,12 +8,14 @@ package org.realtor.rets.retsapi;
 
 
 //import java.util.*;
-import org.apache.log4j.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 ///////////////////////////////////////////////////////////////////////
 public class RETSServerInformationTransaction extends RETSTransaction {
-    static Category cat = Category.getInstance(RETSServerInformationTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSServerInformationTransaction.class);
     String version = null;
 
     /**
