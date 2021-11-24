@@ -1,6 +1,7 @@
 package org.realtor.rets.retsapi;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -11,7 +12,7 @@ import org.apache.log4j.*;
  *        @version 1.0
  */
 public class RETSSearchOfficeTransaction extends RETSSearchTransaction {
-    static Category cat = Category.getInstance(RETSSearchOfficeTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSSearchOfficeTransaction.class);
 
     /**  Creates new a RETSSearchOfficeTransaction
      *
