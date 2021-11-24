@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *        @version 1.0
  */
 public class RETSActionTransaction extends RETSTransaction {
-    private final static Logger logger = LoggerFactory.getLogger(RETSLogoutTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSActionTransaction.class);
 
     /**
      *  Constructor

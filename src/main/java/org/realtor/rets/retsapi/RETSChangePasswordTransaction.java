@@ -1,20 +1,22 @@
 package org.realtor.rets.retsapi;
 
-import org.apache.log4j.*;
 
-import org.realtor.rets.util.*;
+import org.realtor.rets.util.DesCrypter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.security.*;
+import java.security.MessageDigest;
 
 
 /**
- *        Send a Change Password transaction to the server.
+ * Send a Change Password transaction to the server.
  *
- *        @author        jbrush
- *        @version 1.0
+ * @author jbrush
+ * @version 1.0
  */
 public class RETSChangePasswordTransaction extends RETSTransaction {
-    static Category cat = Category.getInstance(RETSChangePasswordTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSActionTransaction.class);
+
     private String oldPassword = null;
     private String newPassword = null;
     private String newPassword2 = null;
@@ -22,7 +24,9 @@ public class RETSChangePasswordTransaction extends RETSTransaction {
     private String decrypted = null;
     private String username = null;
 
-    /** Create a new RETSChangePasswordTransaction */
+    /**
+     * Create a new RETSChangePasswordTransaction
+     */
     public RETSChangePasswordTransaction() {
         super();
         setRequestType("ChangePassword");
@@ -30,7 +34,8 @@ public class RETSChangePasswordTransaction extends RETSTransaction {
 
     /**
      * Sets the username
-     *@param username name user signs in with
+     *
+     * @param username name user signs in with
      */
     public void setUsername(String username) {
         this.username = username;
@@ -38,7 +43,8 @@ public class RETSChangePasswordTransaction extends RETSTransaction {
 
     /**
      * Sets the old password
-     *@param passwd users password to be changed
+     *
+     * @param passwd users password to be changed
      */
     public void setOldPassword(String passwd) {
         this.oldPassword = passwd;
@@ -46,7 +52,8 @@ public class RETSChangePasswordTransaction extends RETSTransaction {
 
     /**
      * Sets the new password value
-     *@param passwd new password
+     *
+     * @param passwd new password
      */
     public void setNewPassword(String passwd) {
         this.newPassword = passwd;
@@ -54,7 +61,8 @@ public class RETSChangePasswordTransaction extends RETSTransaction {
 
     /**
      * Sets the new password confirm value
-     *@param passwd new password
+     *
+     * @param passwd new password
      */
     public void setNewPassword2(String passwd) {
         this.newPassword2 = passwd;
@@ -62,7 +70,7 @@ public class RETSChangePasswordTransaction extends RETSTransaction {
 
     /**
      * process the transaction
-    */
+     */
     public void preprocess() {
         String errMsg = null;
 
@@ -70,9 +78,9 @@ public class RETSChangePasswordTransaction extends RETSTransaction {
 
         setUsername((String) transactionContext.get("username"));
 
-        cat.debug("username=" + username);
-        cat.debug("oldPassword=" + oldPassword);
-        cat.debug("newPassword=" + newPassword);
+        logger.debug("username=" + username);
+        logger.debug("oldPassword=" + oldPassword);
+        logger.debug("newPassword=" + newPassword);
 
         //cat.debug("newPassword2="+newPassword2);
 
@@ -93,7 +101,7 @@ public class RETSChangePasswordTransaction extends RETSTransaction {
 
         //}
         if (errMsg != null) {
-            cat.warn(errMsg);
+            logger.warn(errMsg);
 
             setResponseStatus("20513"); // Miscellaneous error
             setResponseStatusText(errMsg);
@@ -146,7 +154,7 @@ public class RETSChangePasswordTransaction extends RETSTransaction {
         // trim to 8 bytes
         byte[] key = new byte[8];
         System.arraycopy(md.digest((oldPassword + username).toUpperCase()
-                                    .getBytes()), 0, key, 0, 8);
+                .getBytes()), 0, key, 0, 8);
 
         return key;
     }
