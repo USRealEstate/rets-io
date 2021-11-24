@@ -6,14 +6,13 @@
  */
 package org.realtor.rets.retsapi;
 
-
-//import java.util.*;
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 ///////////////////////////////////////////////////////////////////////
 public class RETSGetMetadataTransaction extends RETSTransaction {
-    static Category cat = Category.getInstance(RETSGetMetadataTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSConnection.class);
     String version = null;
 
     /**

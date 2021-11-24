@@ -11,8 +11,9 @@ import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Category;
 import org.realtor.rets.util.RETSConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URLEncoder;
@@ -27,8 +28,7 @@ import java.util.zip.GZIPInputStream;
  * @version 1.0
  */
 public class RETSConnection extends java.lang.Object {
-    // log4j category
-    static Category cat = Category.getInstance(RETSConnection.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSConnection.class);
 
     static {
         RETSConfigurator.configure();

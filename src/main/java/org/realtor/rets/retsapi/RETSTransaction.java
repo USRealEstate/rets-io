@@ -1,26 +1,28 @@
 /**
- *        RETSTransaction.java
+ * RETSTransaction.java
  *
- *        @author        jbrush
- *        @version
+ * @author jbrush
+ * @version
  */
 package org.realtor.rets.retsapi;
 
-import org.apache.log4j.*;
+import org.apache.regexp.RE;
+import org.apache.regexp.RESyntaxException;
+import org.realtor.rets.util.RETSRequestResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.apache.regexp.*;
-
-import org.realtor.rets.util.*;
-
-import java.io.*;
-
-import java.util.*;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 
 ///////////////////////////////////////////////////////////////////////
 
 public class RETSTransaction extends RETSRequestResponse {
-    static Category cat = Category.getInstance(RETSTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSConnection.class);
+
     private static final String STATUS = "status";
     private static final String STATUSTEXT = "statusText";
     private static final String BODY = "body";
@@ -47,7 +49,7 @@ public class RETSTransaction extends RETSRequestResponse {
             firstStatusRE = new RE("<RETS\\s?ReplyCode=\"(.*?)\"\\s?ReplyText=\"(.*?)\"");
             secondStatusRE = new RE("<RETS-STATUS\\s?ReplyCode=\"(.*?)\"\\s?ReplyText=\"(.*?)\"");
         } catch (RESyntaxException e) {
-            cat.error("Error compiling REs", e);
+            logger.error("Error compiling REs", e);
         }
     }
 
@@ -140,7 +142,7 @@ public class RETSTransaction extends RETSRequestResponse {
     public String getUrl() {
         String url = getCapabilityUrl(getRequestType());
 
-        cat.debug("getUrl():" + getRequestType() + " url:" + url);
+        logger.debug("getUrl():" + getRequestType() + " url:" + url);
 
         return url;
     }
@@ -228,22 +230,22 @@ public class RETSTransaction extends RETSRequestResponse {
         // If we have no header map, we obviously have no headers. Also, if
         // there is no list for the header name, we don't have the
         // requested header.
-        if ( headerName != null && headerName.equals("content-type") ) {
+        if (headerName != null && headerName.equals("content-type")) {
             headerName = "Content-Type";
         }
         if (responseHeaderMap != null) {
-            cat.debug("RESPONSEHEADERMAP ==> " + responseHeaderMap.toString());
+            logger.debug("RESPONSEHEADERMAP ==> " + responseHeaderMap.toString());
 //            responseString = (String) responseHeaderMap.get(headerName.toLowerCase());
-            cat.debug("ContentType Class is ... " + responseHeaderMap.get(headerName).getClass().getName());
+            logger.debug("ContentType Class is ... " + responseHeaderMap.get(headerName).getClass().getName());
             Object object = responseHeaderMap.get(headerName);
-            if ( object == null )
+            if (object == null)
                 return null;
-            if ( object instanceof ArrayList ) {
-                responseString = (String) ((ArrayList)object).get(0);
+            if (object instanceof ArrayList) {
+                responseString = (String) ((ArrayList) object).get(0);
             } else
                 responseString = object.toString();
         } else {
-            cat.debug("RESPONSEHEADERMAP ==> " + responseHeaderMap);
+            logger.debug("RESPONSEHEADERMAP ==> " + responseHeaderMap);
         }
         return responseString;
     }
@@ -267,7 +269,7 @@ public class RETSTransaction extends RETSRequestResponse {
     }
 
     static public void log(String logMessage) {
-        cat.debug(logMessage);
+        logger.debug(logMessage);
     }
 }
 
