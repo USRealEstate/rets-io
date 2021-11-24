@@ -72,8 +72,9 @@ public class RETSLoginTransaction extends RETSTransaction {
         this.url = url;
     }
 
-    /** gets the URL for this transaction.
-     *  @param url url string
+    /**
+     * gets the URL for this transaction.
+     * @return URL String
      */
     public String getUrl() {
         return url;
@@ -124,7 +125,7 @@ public class RETSLoginTransaction extends RETSTransaction {
                     capUrl = getResponseVariable(key);
                     qualifiedUrl = qualifyUrl(capUrl, urlRoot);
 
-                    cat.debug(capList[i] + "=[" + qualifiedUrl + "]");
+                    logger.debug(capList[i] + "=[" + qualifiedUrl + "]");
                     putCapabilityUrl(capList[i], qualifiedUrl);
 
                     if (capList[i].equalsIgnoreCase("Login")) // login may reset rootUrl
@@ -166,15 +167,15 @@ public class RETSLoginTransaction extends RETSTransaction {
 
             //String path = url.getPath();
             //String file = url.getFile();
-            cat.debug("protocol = [" + protocol + "]");
-            cat.debug("host = [" + host + "]");
-            cat.debug("port = [" + port + "]");
+            logger.debug("protocol = [" + protocol + "]");
+            logger.debug("host = [" + host + "]");
+            logger.debug("port = [" + port + "]");
 
             //cat.debug("path = ["+path+"]");
             //cat.debug("file = ["+file+"]");
             return protocol + "://" + host + ((port > 0) ? (":" + port) : "");
         } catch (MalformedURLException e) {
-            cat.warn("getUrlRoot:MalformedURLException myUrl=\"" + myUrl +
+            logger.warn("getUrlRoot:MalformedURLException myUrl=\"" + myUrl +
                 "\"");
         }
 
