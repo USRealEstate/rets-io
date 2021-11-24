@@ -1,16 +1,17 @@
 package org.realtor.rets.retsapi;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
- *        RETSSearchPropertyBatchTransaction.java
+ * RETSSearchPropertyBatchTransaction.java
  *
- *        @author        jbrush
- *        @version 1.0
+ * @author jbrush
+ * @version 1.0
  */
 public class RETSSearchPropertyTransaction extends RETSSearchTransaction {
-    static Category cat = Category.getInstance(RETSSearchPropertyTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSSearchPropertyTransaction.class);
 
     public RETSSearchPropertyTransaction() {
         super();
