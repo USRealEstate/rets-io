@@ -2,11 +2,15 @@ package org.realtor.rets.retsapi;
 
 
 //import org.apache.regexp.*;
-import org.apache.log4j.*;
 
-import java.net.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -18,7 +22,7 @@ import java.util.*;
  */
 public class RETSLoginTransaction extends RETSTransaction {
     /** log4j Object */
-    static Category cat = Category.getInstance(RETSLoginTransaction.class);
+    private final static Logger logger = LoggerFactory.getLogger(RETSLoginTransaction.class);
 
     /**
      *  capablitiy list
