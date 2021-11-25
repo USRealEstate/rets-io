@@ -108,13 +108,14 @@ public class RETSConnection extends java.lang.Object {
     /**
      * Executes a transaction
      *
-     * @param RETSTransaction transaction to execute
+     * @param transaction transaction to execute
+     * @param asStream
      */
     public void execute(RETSTransaction transaction, boolean asStream) {
         java.util.Date dt1 = new Date();
         STREAMRESPONSE = asStream;
 
-        if ( transaction instanceof RETSGetObjectTransaction ) {
+        if (transaction instanceof RETSGetObjectTransaction) {
             setRequestHeaderField("Accept", getImageAccept());
         } else {
             setRequestHeaderField("Accept", "*/*");
@@ -478,7 +479,7 @@ public class RETSConnection extends java.lang.Object {
 
             transaction.setResponseHeaderMap(this.responseHeaderMap);
 
-            if ((transaction instanceof RETSGetObjectTransaction && (! transaction.getResponseHeader("Content-Type").startsWith("text/xml"))) || STREAMRESPONSE) {
+            if ((transaction instanceof RETSGetObjectTransaction && (!transaction.getResponseHeader("Content-Type").startsWith("text/xml"))) || STREAMRESPONSE) {
                 transaction.setResponseStream(is);
             } else {
                 String contents = null;
