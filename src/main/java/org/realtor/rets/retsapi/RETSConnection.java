@@ -308,7 +308,7 @@ public class RETSConnection extends java.lang.Object {
             client.setConnectionTimeout(connTimeoutSeconds * 1000);
 
             method.setDoAuthentication(true);
-            method.setFollowRedirects(true);
+//            method.setFollowRedirects(true);
 
             addHeaders(method, headerHash);
             writeMapToTransactionLog(headerHash);
