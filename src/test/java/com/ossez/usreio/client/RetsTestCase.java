@@ -1,9 +1,6 @@
 package com.ossez.usreio.client;
 
-import junit.framework.TestCase;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 
 import java.io.BufferedReader;
@@ -17,7 +14,7 @@ import java.util.Properties;
 /**
  * @author YuCheng Hu
  */
-@TestInstance(TestInstance.Lifecycle.PER_METHOD)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class RetsTestCase {
 
     public Properties props = new Properties();
