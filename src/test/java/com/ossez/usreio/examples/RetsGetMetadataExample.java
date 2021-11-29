@@ -2,7 +2,6 @@ package com.ossez.usreio.examples;
 
 import java.net.MalformedURLException;
 
-import com.ossez.reoc.rets.client.*;
 import com.ossez.usreio.common.metadata.types.MClass;
 import com.ossez.usreio.common.metadata.types.MResource;
 import com.ossez.usreio.common.metadata.types.MSystem;
