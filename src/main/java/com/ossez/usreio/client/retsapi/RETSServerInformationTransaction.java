@@ -4,7 +4,7 @@
  *        @author        pobrien
  *        @version
  */
-package org.realtor.rets.retsapi;
+package com.ossez.usreio.client.retsapi;
 
 
 //import java.util.*;
