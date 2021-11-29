@@ -1,6 +1,5 @@
 package com.ossez.usreio.common.util;
 
-import com.ossez.reoc.rets.client.*;
 import com.ossez.usreio.client.*;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
