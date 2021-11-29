@@ -1,8 +1,8 @@
 package com.ossez.usreio.client.tests;
 
 import org.junit.jupiter.api.Test;
-import org.realtor.rets.retsapi.RETSConnection;
-import org.realtor.rets.retsapi.RETSLoginTransaction;
+import com.ossez.usreio.client.retsapi.RETSConnection;
+import com.ossez.usreio.client.retsapi.RETSLoginTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
