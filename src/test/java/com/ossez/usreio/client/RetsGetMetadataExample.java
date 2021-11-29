@@ -1,4 +1,4 @@
-package com.ossez.usreio.examples;
+package com.ossez.usreio.client;
 
 import java.net.MalformedURLException;
 
