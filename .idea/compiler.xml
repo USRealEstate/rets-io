@@ -9,10 +9,5 @@
         <module name="rets-io-client" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="rets-io-client" target="1.8" />
-      <module name="rets-io-client.main" target="1.8" />
-      <module name="rets-io-client.test" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
