@@ -23,7 +23,7 @@ public class RETSSearchAgentTransaction extends RETSSearchTransaction {
 
     /**  Search by last name, pass in the lastname of a user
      *   as the "query" argument.
-     *   @param searchByLastName lastname of the user to search.
+     *   @param searchByLastname lastname of the user to search.
      */
     public void setSearchByLastname(String searchByLastname) {
         // convert to DMQL

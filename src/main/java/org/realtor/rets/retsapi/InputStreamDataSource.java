@@ -9,7 +9,7 @@ import java.util.Vector;
 
 /**
  * A class to provide a {@link javax.activation.DataSource} interface to
- * an input stream of unknown characteristics. The <code>DataSource</cdoe>
+ * an input stream of unknown characteristics. The <code>DataSource</code>
  * interface requires that its implementor be able to repeatedly restart
  * the read from the beginning. This isn't guaranteed by InputStream, so
  * we encapsulate the InputStream with an object that will buffer the

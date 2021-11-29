@@ -16,11 +16,10 @@ import java.util.Iterator;
 /**
  * RETSGetObjectTransaction.java
  *
+ * @author jbrush
  * @version 1.0
- * @author	jbrush
  */
-public class RETSGetObjectTransaction extends RETSTransaction
-{
+public class RETSGetObjectTransaction extends RETSTransaction {
     /**
      * Encapsulates the RETS GetObject transaction, and provides services for
      * interpreting the result. As with all {@link RETSTransaction} classes,
@@ -66,10 +65,11 @@ public class RETSGetObjectTransaction extends RETSTransaction
         setRequestVariable("Resource", str);
     }
 
+
     /**
      * Sets the type attribute to the string passed in.
      *
-     * @param type type attribute value
+     * @param str type attribute value
      */
     public void setType(String str) {
         logger.debug("set Type=" + str);
@@ -82,7 +82,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * @param str ID of the object
      */
     public void setID(String str) {
-        if ( str != null ) {
+        if (str != null) {
             logger.debug("set ID=" + str.trim());
             setRequestVariable("ID", str.trim());
         } else {
@@ -103,7 +103,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
     /**
      * Sets the response stream. This triggers various actions depending on the
      * content-type of the response stream:
-
+     * <p>
      * If the content-type is text/plain or text/xml, then assume we have a
      * RETS response and parse it accordingly. Note that we'll not have
      * anything in the RETS response except error information. (We might
@@ -111,21 +111,20 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * is that we made a request with Location=1 and the server has
      * responded in kind.) We still make this available, in case there *is*
      * something else in the response.
-
+     * <p>
      * A content-type of<code> multipart</code>, with any subtype, is interpreted as a
      * multipart response. This is parsed to create a list of MIME parts.
      * Any other content type is simply made available as a single MIME part.
-
+     * <p>
      * This method is called by {@link RETSConnection} to provide access to
      * the response from a transaction. You don't normally call this method
      * yourself.
      *
      * @param responseStream The response stream to associate with this transaction.
-     * @call Rarely.
-     * @override Rarely. You can override this method if you want to provide
-     * special processing of a GetObject response stream, but
-     * it will usually be more convenient to override one                                                                   
-     * of the methods that handles particular MIME types.
+     *                       Rarely. You can override this method if you want to provide
+     *                       special processing of a GetObject response stream, but
+     *                       it will usually be more convenient to override one
+     *                       of the methods that handles particular MIME types.
      */
     public void setResponseStream(InputStream responseStream) {
 
@@ -172,8 +171,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * deal with it. If not, handle as for an unknown response.
      *
      * @param responseStream The response stream containing the XML data.
-     * @call Only from subclasses.
-     * @ @override Override to provide your own handling of XML data
+     *  Override to provide your own handling of XML data
      * streams.
      */
     protected void handleXMLStream(InputStream responseStream, String mimeType, String contentType) {
@@ -203,11 +201,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
      *
      * @param responseStream The stream to parse.
      * @param mimeType       The MIME type and subtype associated with the stream.
-     * @param contentType    The Content-Type header, including the MIME type and its parameters, if any.
-     * @call Only from subclasses.
-     * @override Override to provide your own handling of MIME multipart
-     * <p/>
-     * data.
+     * @param contentType    The Content-Type header, including the MIME type and its parameters, if any
      */
     protected void handleMultipartStream(InputStream responseStream, String mimeType, String contentType) {
 
@@ -239,7 +233,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
             setResponseStatusText("RETSAPI: I/O exception while creating multipart stream from response: " + ioException.getMessage());
         } finally {
             // We always want at least an empty body part list.
-            if ( parts == null ) parts = new ArrayList();
+            if (parts == null) parts = new ArrayList();
         }
     }
 
@@ -250,8 +244,6 @@ public class RETSGetObjectTransaction extends RETSTransaction
      *
      * @param inputBytes  A byte array containing the response data.
      * @param contentType The content-type header.
-     * @call Rarely.
-     * @override Rarely.
      */
     protected void makeSinglePartFromByteStream(byte[] inputBytes, String contentType) {
         // First, we need to gather the response headers into an InternetHeader object
@@ -264,7 +256,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
             headerName = (String) headerIterator.next();
 //            String headerContent = (String) getResponseHeaderMap().get(headerName);
             headerContent = getResponseHeaderMap().get(headerName);
-            if ( headerContent != null )
+            if (headerContent != null)
                 originalHeaders.addHeader(headerName, headerContent.toString());
         }
         parts = new ArrayList(1); // We may not have *any*, but we won't have more than 1.
@@ -286,10 +278,8 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * @param responseStream The stream to parse.
      * @param mimeType       The MIME type and subtype associated with the stream.
      * @param contentType    The Content-Type header, including the MIME type and its parameters, if any.
-     * @call Only from subclasses.
-     * @override Override to provide your own handling of data with special
-     * <p/>
-     * MIME types.
+     *                       <p>
+     *                       MIME types.
      */
     protected void handleStreamWithType(InputStream responseStream, String mimeType, String contentType) {
         try {
@@ -306,7 +296,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * Returns the count of retrieved objects.
      */
     public int getObjectCount() {
-        if ( parts == null ) return 0;
+        if (parts == null) return 0;
         return parts.size();
     }
 
@@ -325,7 +315,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
      * @param objectIndex The index of the object to retrieve.
      */
     public MimeBodyPart partAtIndex(int objectIndex) {
-        if ( parts == null || objectIndex < 0 || objectIndex >= parts.size() )
+        if (parts == null || objectIndex < 0 || objectIndex >= parts.size())
             return null;
         return (MimeBodyPart) parts.get(objectIndex);
     }
@@ -334,7 +324,7 @@ public class RETSGetObjectTransaction extends RETSTransaction
         InputStream inputStream = null;
         MimeBodyPart part = this.partAtIndex(objectIndex);
         try {
-            if ( part != null ) {
+            if (part != null) {
                 Object content = part.getContent();
                 inputStream = (InputStream) content;
                 logger.debug("--- MimeBodyPart Content--> " + content);

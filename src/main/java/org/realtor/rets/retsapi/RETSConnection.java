@@ -90,7 +90,7 @@ public class RETSConnection extends java.lang.Object {
     /**
      * Executes a transaction
      *
-     * @param RETSTransaction transaction to execute
+     * @param transaction transaction to execute
      */
     public void execute(RETSTransaction transaction) {
         execute(transaction, false);
@@ -99,7 +99,7 @@ public class RETSConnection extends java.lang.Object {
     /**
      * Executes a transaction
      *
-     * @param RETSTransaction transaction to execute
+     * @param transaction transaction to execute
      */
     public void executeStreamResponse(RETSTransaction transaction) {
         execute(transaction, true);
