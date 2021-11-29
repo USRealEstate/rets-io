@@ -6,7 +6,7 @@
 //  Copyright (c) 2005 __MyCompanyName__. All rights reserved.
 //
 
-package org.realtor.rets.retsapi;
+package com.ossez.usreio.client.retsapi;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

@@ -4,7 +4,7 @@
  * @author jbrush
  * @version
  */
-package org.realtor.rets.retsapi;
+package com.ossez.usreio.client.retsapi;
 
 import org.apache.regexp.RE;
 import org.apache.regexp.RESyntaxException;

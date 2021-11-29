@@ -1,4 +1,4 @@
-package org.realtor.rets.retsapi;
+package com.ossez.usreio.client.retsapi;
 
 import org.realtor.rets.util.AttributeExtracter;
 import org.realtor.rets.util.ResourceLocator;

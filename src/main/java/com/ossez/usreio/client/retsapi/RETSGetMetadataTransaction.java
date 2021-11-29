@@ -4,7 +4,7 @@
  *        @author        jbrush
  *        @version
  */
-package org.realtor.rets.retsapi;
+package com.ossez.usreio.client.retsapi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -3,11 +3,10 @@
  *
  * Created on November 16, 2001, 1:33 PM
  */
-package org.realtor.rets.retsapi;
+package com.ossez.usreio.client.retsapi;
 
 //import com.aftexsw.util.bzip.CBZip2InputStream;
 
-import ch.qos.logback.classic.BasicConfigurator;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;

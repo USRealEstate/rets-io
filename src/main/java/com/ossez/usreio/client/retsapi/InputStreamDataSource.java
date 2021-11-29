@@ -1,4 +1,4 @@
-package org.realtor.rets.retsapi;
+package com.ossez.usreio.client.retsapi;
 
 import javax.activation.DataSource;
 import java.io.ByteArrayInputStream;
