@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<project>
+  <extend>${maven.base.project}</extend>
+
+  <pomVersion>3</pomVersion>
+  <name>RETS API</name>
+  <id>retsapi</id>
+  <currentVersion>1.0</currentVersion>
+  <inceptionYear>2003</inceptionYear>
+  <package>org.realtor.rets</package>
+  <logo>/images/logos/rets_suite.jpg</logo>
+  
+  <shortDescription>
+    Java RETS API 
+  </shortDescription>
+
+  <description>
+    The RETS API is a Reference Implementation API for RETS Transactions
+    written in Java and can be used as an API by web-based and desktop
+    RETS Client Applications.   
+  </description>
+
+  <url>/sandbox/${pom.artifactId}/</url>
+  
+  <versions>
+    <version>
+      <id>release</id>
+      <name>1.0</name>
+      <tag>RETSAPI</tag>
+    </version>
+  </versions>
+
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.5</version>
+      <url>http://www.ibiblio.org/maven/log4j</url>
+    </dependency>
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>2.0-rc1</version>
+      <url>http://www.ibiblio.org/maven/commons-httpclient</url>
+    </dependency>
+   <dependency>
+      <groupId>regexp</groupId>
+      <artifactId>regexp</artifactId>
+      <version>1.2</version>
+      <url>http://www.ibiblio.org/maven/regexp</url>
+    </dependency>
+    <dependency>
+      <groupId>BZip2</groupId>
+      <artifactId>BZip2</artifactId>
+      <version>1.0</version>
+      <url></url>
+    </dependency>
+    <dependency>
+      <groupId>retscommons</groupId>
+      <artifactId>retscommons</artifactId>
+      <version>1.0</version>
+      <url></url>
+    </dependency>
+  </dependencies>
+
+  <build> 
+
+    <nagEmailAddress>
+      rets@avantia-inc.com    
+    </nagEmailAddress>
+
+    <sourceDirectory>${basedir}/src</sourceDirectory>
+
+    <!-- J A R  R E S O U R C E S -->
+    <!-- Resources that are packaged up inside the JAR file -->
+    <resources>
+       <resource>
+        <directory>${basedir}/lib</directory>
+        <includes>
+          <include>*.jar</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>${basedir}/src/resources/misc</directory>
+        <includes>
+          <include>*.xsd</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>${basedir}/config</directory>
+        <includes>
+          <include>log4j.properties</include>
+        </includes>
+      </resource>
+    </resources>
+
+    <!-- Integration unit test cases -->
+    <integrationUnitTest/>
+
+    <jars>
+    </jars>
+</build>
+ <reports>
+    <report>maven-changelog-plugin</report>
+    <report>maven-changes-plugin</report>
+    <report>maven-checkstyle-plugin</report>
+    <report>maven-developer-activity-plugin</report>
+    <report>maven-file-activity-plugin</report>
+    <report>maven-jdepend-plugin</report>
+    <report>maven-junit-report-plugin</report>
+    <report>maven-jxr-plugin</report>
+    <report>maven-pmd-plugin</report>
+    <report>maven-tasklist-plugin</report>
+  </reports>
+</project>

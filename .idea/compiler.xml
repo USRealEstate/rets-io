@@ -6,7 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+<<<<<<< HEAD
         <module name="rets-io-client" />
+=======
+        <module name="rets-io-client-api" />
+>>>>>>> origin/rets-io-client-api/main
       </profile>
     </annotationProcessing>
   </component>
