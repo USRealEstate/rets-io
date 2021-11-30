@@ -1,4 +1,4 @@
-package com.ossez.usreio.client;
+package com.ossez.usreio.common.rets;
 
 import java.io.Serializable;
 

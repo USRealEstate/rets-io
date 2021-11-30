@@ -1,5 +1,6 @@
 package com.ossez.usreio.tests.client;
 
+import com.ossez.usreio.common.rets.RetsConfigurator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 
@@ -18,6 +19,8 @@ import java.util.Properties;
 public abstract class RetsTestCase {
 
     public Properties props = new Properties();
+    public RetsConfigurator retsConfigurator = new RetsConfigurator();
+
     public String retsLoginUrl;
     public String retsUsername;
     public String retsPassword;
@@ -27,9 +30,9 @@ public abstract class RetsTestCase {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         props.load(loader.getResourceAsStream("rets.properties"));
 
-        retsLoginUrl = props.getProperty("rets_server");
-        retsUsername = props.getProperty("rets_username");
-        retsPassword = props.getProperty("rets_password");
+        retsConfigurator.setServerUrl(props.getProperty("rets_server"));
+        retsConfigurator.setServerUsername(props.getProperty("rets_username"));
+        retsConfigurator.setServerPassword(props.getProperty("rets_password"));
     }
 
     /**

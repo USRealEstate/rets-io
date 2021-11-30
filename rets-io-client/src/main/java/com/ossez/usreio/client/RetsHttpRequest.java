@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import com.ossez.usreio.common.rets.RetsVersion;
 import com.ossez.usreio.common.util.CaseInsensitiveTreeMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
