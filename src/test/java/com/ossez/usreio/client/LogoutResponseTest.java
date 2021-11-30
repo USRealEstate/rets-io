@@ -36,7 +36,7 @@ public class LogoutResponseTest extends RetsTestCase {
 
 		} catch (RetsException e) {
 			// Expected
-			fail("Should have thrown exception");
+//			fail("Should have thrown exception");
 		}
 	}
 	/*
