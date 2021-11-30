@@ -10,38 +10,25 @@ import com.ossez.usreio.tests.common.metadata.types.MClass;
 import com.ossez.usreio.tests.common.metadata.types.MResource;
 import com.ossez.usreio.tests.common.metadata.types.MSystem;
 import com.ossez.usreio.client.*;
+import com.ossez.usreio.util.SessionUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 /**
  * Simple Example performing a GetMetadata and iterating of the results
+ *
+ * @author YuCheng Hu
  */
-public class RetsMetadataTest {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class RetsMetadataTest extends RetsTestCase {
 
-    public static void main(String[] args) throws MalformedURLException {
-
-        //Create a RetsHttpClient (other constructors provide configuration i.e. timeout, gzip capability)
-        RetsHttpClient httpClient = new CommonsHttpClient();
-        RetsVersion retsVersion = RetsVersion.RETS_1_7_2;
-        String loginUrl = "";
-
-        //Create a RetesSession with RetsHttpClient
-        RetsSession session = new RetsSession(loginUrl, httpClient, retsVersion);
-
-        String username = "";
-        String password = "";
-
-        //Set method as GET or POST
-        session.setMethod("POST");
+    @Test
+    public void testGetRetsMetadata() {
+        RetsSession session = null;
         try {
-            //Login
-            LoginResponse loginResponse = session.login(username, password);
 
-            System.out.println(">>>" + loginResponse.getSessionId());
-        } catch (RetsException e) {
-            e.printStackTrace();
-        }
+            session = SessionUtils.retsLogin(retsLoginUrl, retsUsername, retsPassword, RetsVersion.RETS_1_7_2);
 
-        try {
             MSystem system = session.getMetadata().getSystem();
             System.out.println(
                     "SYSTEM: " + system.getSystemID() +
