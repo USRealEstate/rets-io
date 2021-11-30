@@ -1,8 +1,8 @@
 package com.ossez.usreio.client;
 
-import com.ossez.usreio.common.metadata.MetaCollector;
-import com.ossez.usreio.common.metadata.MetaObject;
-import com.ossez.usreio.common.metadata.MetadataType;
+import com.ossez.usreio.tests.common.metadata.MetaCollector;
+import com.ossez.usreio.tests.common.metadata.MetaObject;
+import com.ossez.usreio.tests.common.metadata.MetadataType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
