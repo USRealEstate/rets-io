@@ -1,10 +1,10 @@
 package com.ossez.usreio.client;
 
-public abstract class VersionInsensitiveRequest extends RetsHttpRequest {
+public abstract class Main extends RetsHttpRequest {
 	/**
 	 * Abstract class of subclasses where the Version of RETS is not needed (Password Request, Login Request, etc.)
 	 */
-	public VersionInsensitiveRequest() {
+	public Main() {
 		super();
 	}
 
