@@ -17,13 +17,13 @@ public class RetsGetMetadataExample {
         //Create a RetsHttpClient (other constructors provide configuration i.e. timeout, gzip capability)
         RetsHttpClient httpClient = new CommonsHttpClient();
         RetsVersion retsVersion = RetsVersion.RETS_1_7_2;
-        String loginUrl = "http://neren.rets.paragonrels.com/rets/fnisrets.aspx/NEREN/login?rets-version=rets/1.7.2";
+        String loginUrl = "";
 
         //Create a RetesSession with RetsHttpClient
         RetsSession session = new RetsSession(loginUrl, httpClient, retsVersion);
 
-        String username = "625166idx";
-        String password = "B5R6PZ2KGN3eS5m7";
+        String username = "";
+        String password = "";
 
         //Set method as GET or POST
         session.setMethod("POST");
