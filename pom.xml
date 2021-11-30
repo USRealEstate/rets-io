@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ossez.usreio</groupId>
-    <artifactId>rets-io-client</artifactId>
+    <artifactId>rets-io</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
-    <name>Rets-Io-Client</name>
+    <name>Rets-Io</name>
     <description>The RETS API is a Reference Implementation API for RETS Transactions written in Java and can be used as
         an API by web-based and desktop RETS Client Applications.
     </description>
@@ -25,28 +25,12 @@
         </developer>
     </developers>
 
-    <profiles>
-        <profile>
-            <id>local</id>
-            <properties>
-                <env>local</env>
-                <client.local.directory>/tmp/files</client.local.directory>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-    </profiles>
+    <modules>
+        <module>rets-io-common</module>
+        <module>rets-io-client</module>
+    </modules>
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.ossez.usreio</groupId>
-            <artifactId>rets-io-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-
         <!-- LOG -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -118,7 +102,6 @@
         </dependency>
 
 
-
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
@@ -148,15 +131,6 @@
         </resources>
 
         <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
