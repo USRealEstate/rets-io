@@ -3,7 +3,7 @@ package com.ossez.usreio.tests.client;
 import com.ossez.usreio.client.RetsException;
 import com.ossez.usreio.client.RetsSession;
 import com.ossez.usreio.client.RetsVersion;
-import com.ossez.usreio.common.util.SessionUtils;
+import com.ossez.usreio.util.SessionUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.slf4j.Logger;

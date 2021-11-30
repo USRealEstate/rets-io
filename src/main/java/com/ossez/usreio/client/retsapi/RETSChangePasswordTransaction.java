@@ -1,7 +1,7 @@
 package com.ossez.usreio.client.retsapi;
 
 
-import org.realtor.rets.util.DesCrypter;
+import com.ossez.usreio.common.util.DesCrypter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

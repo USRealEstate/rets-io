@@ -6,9 +6,10 @@
  */
 package com.ossez.usreio.client.retsapi;
 
+import com.ossez.usreio.common.util.RETSRequestResponse;
 import org.apache.regexp.RE;
 import org.apache.regexp.RESyntaxException;
-import org.realtor.rets.util.RETSRequestResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
