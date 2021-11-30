@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RETS ReplyCode="0" ReplyText="Login Request">
+    <RETS-RESPONSE>
+        MemberName=BHHS Verani IDX RETS User
+        User=test,1,21,279117
+        Broker=4935,4935
+        MetadataVersion=19.9.17332
+        MetadataTimestamp=2019-09-12T00:52:11.2Z
+        MinMetadataTimestamp=2019-09-12T00:52:11.2Z
+        TimeoutSeconds=7200
+        GetMetadata=/rets/fnisrets.aspx/NEREN/getmetadata
+        GetObject=/rets/fnisrets.aspx/NEREN/getobject
+        Login=http://neren.rets.paragonrels.com/rets/fnisrets.aspx/NEREN/login
+        Logout=/rets/fnisrets.aspx/NEREN/logout
+        Search=/rets/fnisrets.aspx/NEREN/search
+    </RETS-RESPONSE>
+</RETS>
