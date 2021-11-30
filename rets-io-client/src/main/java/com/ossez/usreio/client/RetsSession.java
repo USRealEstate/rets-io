@@ -2,6 +2,7 @@ package com.ossez.usreio.client;
 
 import java.util.Map;
 
+import com.ossez.usreio.common.rets.RetsVersion;
 import com.ossez.usreio.tests.common.metadata.Metadata;
 import com.ossez.usreio.tests.common.metadata.MetadataException;
 import org.apache.commons.logging.Log;

@@ -2,7 +2,7 @@ package com.ossez.usreio.tests.client;
 
 import com.ossez.usreio.client.LogoutResponse;
 import com.ossez.usreio.client.RetsException;
-import com.ossez.usreio.client.RetsVersion;
+import com.ossez.usreio.common.rets.RetsVersion;
 
 public class LogoutResponseTest extends RetsTestCase {
 	/*

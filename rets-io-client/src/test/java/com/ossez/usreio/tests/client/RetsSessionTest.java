@@ -2,7 +2,7 @@ package com.ossez.usreio.tests.client;
 
 import com.ossez.usreio.client.RetsException;
 import com.ossez.usreio.client.RetsSession;
-import com.ossez.usreio.client.RetsVersion;
+import com.ossez.usreio.common.rets.RetsVersion;
 import com.ossez.usreio.util.SessionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class RetsSessionTest extends RetsTestCase {
         logger.debug("Test Rets Session Login by URL: [{}]", retsLoginUrl);
 
         try {
-            RetsSession session = SessionUtils.retsLogin(retsLoginUrl, retsUsername, retsPassword, RetsVersion.RETS_1_7_2);
+            RetsSession session = SessionUtils.retsLogin(retsConfigurator);
             assertNotNull(session.getSessionId());
         } catch (RetsException ex) {
             logger.debug("Session Login Error", ex);

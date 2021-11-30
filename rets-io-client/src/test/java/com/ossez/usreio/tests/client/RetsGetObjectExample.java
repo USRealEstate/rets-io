@@ -15,7 +15,7 @@ import com.ossez.usreio.client.GetObjectRequest;
 import com.ossez.usreio.client.RetsException;
 import com.ossez.usreio.client.RetsHttpClient;
 import com.ossez.usreio.client.RetsSession;
-import com.ossez.usreio.client.RetsVersion;
+import com.ossez.usreio.common.rets.RetsVersion;
 import com.ossez.usreio.client.SingleObjectResponse;
 
 

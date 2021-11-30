@@ -1,11 +1,11 @@
 package com.ossez.usreio.tests.client;
 
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.Properties;
 
 import com.ossez.usreio.client.retsapi.RETSConnection;
 import com.ossez.usreio.client.retsapi.RETSGetMetadataTransaction;
+import com.ossez.usreio.common.rets.RetsVersion;
 import com.ossez.usreio.tests.common.metadata.types.MClass;
 import com.ossez.usreio.tests.common.metadata.types.MResource;
 import com.ossez.usreio.tests.common.metadata.types.MSystem;
@@ -27,7 +27,7 @@ public class RetsMetadataTest extends RetsTestCase {
         RetsSession session = null;
         try {
 
-            session = SessionUtils.retsLogin(retsLoginUrl, retsUsername, retsPassword, RetsVersion.RETS_1_7_2);
+            session = SessionUtils.retsLogin(retsConfigurator);
 
             MSystem system = session.getMetadata().getSystem();
             System.out.println(

@@ -4,7 +4,7 @@ package com.ossez.usreio.tests.client;
 import com.ossez.usreio.client.CapabilityUrls;
 import com.ossez.usreio.client.LoginResponse;
 import com.ossez.usreio.client.RetsException;
-import com.ossez.usreio.client.RetsVersion;
+import com.ossez.usreio.common.rets.RetsVersion;
 import org.junit.Test;
 
 public class LoginResponseTest extends RetsTestCase {

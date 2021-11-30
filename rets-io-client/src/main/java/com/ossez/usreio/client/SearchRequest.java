@@ -1,5 +1,7 @@
 package com.ossez.usreio.client;
 
+import com.ossez.usreio.common.rets.RetsVersion;
+
 /**
  * 
  * The search request sent from search() in RetsSession
