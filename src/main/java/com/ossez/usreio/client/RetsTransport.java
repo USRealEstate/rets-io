@@ -5,10 +5,10 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ossez.usreio.common.metadata.JDomCompactBuilder;
-import com.ossez.usreio.common.metadata.JDomStandardBuilder;
-import com.ossez.usreio.common.metadata.Metadata;
-import com.ossez.usreio.common.metadata.MetadataBuilder;
+import com.ossez.usreio.tests.common.metadata.JDomCompactBuilder;
+import com.ossez.usreio.tests.common.metadata.JDomStandardBuilder;
+import com.ossez.usreio.tests.common.metadata.Metadata;
+import com.ossez.usreio.tests.common.metadata.MetadataBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;

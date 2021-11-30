@@ -3,10 +3,10 @@ package com.ossez.usreio.client;
 import java.io.InputStream;
 import java.util.List;
 
-import com.ossez.usreio.common.metadata.JDomCompactBuilder;
-import com.ossez.usreio.common.metadata.JDomStandardBuilder;
-import com.ossez.usreio.common.metadata.MetaObject;
-import com.ossez.usreio.common.metadata.MetadataException;
+import com.ossez.usreio.tests.common.metadata.JDomCompactBuilder;
+import com.ossez.usreio.tests.common.metadata.JDomStandardBuilder;
+import com.ossez.usreio.tests.common.metadata.MetaObject;
+import com.ossez.usreio.tests.common.metadata.MetadataException;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
