@@ -1,7 +1,7 @@
 package com.ossez.usreio.client.retsapi;
 
-import org.realtor.rets.util.AttributeExtracter;
-import org.realtor.rets.util.ResourceLocator;
+import com.ossez.usreio.common.util.AttributeExtracter;
+import com.ossez.usreio.common.util.ResourceLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.helpers.DefaultHandler;
@@ -11,12 +11,10 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 
-
 /**
- * RETSSearchTransaction.java
+ * RETSSearchTransaction
  *
- * @author jbrush
- * @version 1.0
+ * @author YuCheng Hu
  */
 public class RETSSearchTransaction extends RETSTransaction {
     private final static Logger logger = LoggerFactory.getLogger(RETSSearchTransaction.class);

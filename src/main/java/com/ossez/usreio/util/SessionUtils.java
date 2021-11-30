@@ -1,4 +1,4 @@
-package com.ossez.usreio.common.util;
+package com.ossez.usreio.util;
 
 import com.ossez.usreio.client.*;
 import org.apache.commons.lang3.ObjectUtils;

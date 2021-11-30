@@ -1,9 +1,9 @@
 package com.ossez.usreio.client;
 
+import com.ossez.usreio.common.util.CaseInsensitiveTreeMap;
+
 import java.io.InputStream;
 import java.util.Map;
-
-import com.ossez.usreio.common.util.CaseInsensitiveTreeMap;
 
 /**
  * Representation of a single object returned
