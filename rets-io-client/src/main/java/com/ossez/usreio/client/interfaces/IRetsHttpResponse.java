@@ -1,4 +1,6 @@
-package com.ossez.usreio.client;
+package com.ossez.usreio.client.interfaces;
+
+import com.ossez.usreio.client.RetsException;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -8,7 +10,7 @@ import java.util.Map;
  *
  * @author YuCheng Hu
  */
-public interface RetsHttpResponse {
+public interface IRetsHttpResponse {
     public int getResponseCode() throws RetsException;
 
     public Map getHeaders() throws RetsException;

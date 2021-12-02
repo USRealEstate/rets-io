@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
+import com.ossez.usreio.client.interfaces.IRetsHttpResponse;
 import com.ossez.usreio.common.util.CaseInsensitiveTreeMap;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -13,12 +14,12 @@ import org.apache.http.HttpResponse;
 
 import com.google.common.io.Closeables;
 
-public class CommonsHttpClientResponse implements RetsHttpResponse {
+public class CommonsHttpClientResponseI implements IRetsHttpResponse {
 	private HttpResponse response;
 	private Map<String,String> headers;
 	private Map<String,String> cookies;
 
-	public CommonsHttpClientResponse(HttpResponse response, Map<String,String> cookies) {
+	public CommonsHttpClientResponseI(HttpResponse response, Map<String,String> cookies) {
 		this.response = response;
 		this.cookies = new CaseInsensitiveTreeMap<String,String>(cookies);
 

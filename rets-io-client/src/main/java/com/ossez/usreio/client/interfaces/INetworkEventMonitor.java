@@ -1,9 +1,9 @@
-package com.ossez.usreio.client;
+package com.ossez.usreio.client.interfaces;
 
 /**
  * A client can register a monitor for network events
  */
-public interface NetworkEventMonitor
+public interface INetworkEventMonitor
 {
     /**
      * inform the client app that an event has started.

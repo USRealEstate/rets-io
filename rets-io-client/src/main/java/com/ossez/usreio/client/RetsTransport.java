@@ -5,6 +5,10 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ossez.usreio.client.interfaces.IRetsHttpResponse;
+import com.ossez.usreio.client.interfaces.INetworkEventMonitor;
+import com.ossez.usreio.client.models.request.LoginRequest;
+import com.ossez.usreio.client.models.response.LoginResponse;
 import com.ossez.usreio.common.rets.RetsVersion;
 import com.ossez.usreio.tests.common.metadata.JDomCompactBuilder;
 import com.ossez.usreio.tests.common.metadata.JDomStandardBuilder;
@@ -31,7 +35,7 @@ public class RetsTransport {
 	private String method = "GET";
 	private RetsVersion version;
 	private boolean strict;
-	private NetworkEventMonitor monitor;
+	private INetworkEventMonitor monitor;
 	
 	private static final Log LOG = LogFactory.getLog(RetsTransport.class);
 
@@ -73,7 +77,7 @@ public class RetsTransport {
 		this.doVersionHeader(version);
 		this.strict = strict;
 		this.client.addDefaultHeader("Accept", "*/*");
-		this.monitor = new NullNetworkEventMonitor();
+		this.monitor = new NullINetworkEventMonitor();
 	}
 
 	/**
@@ -99,9 +103,9 @@ public class RetsTransport {
 		this.strict = strict;
 	}
 
-	public void setMonitor(NetworkEventMonitor monitor) {
+	public void setMonitor(INetworkEventMonitor monitor) {
 		if (monitor == null) {
-			monitor = new NullNetworkEventMonitor();
+			monitor = new NullINetworkEventMonitor();
 		}
 		this.monitor = monitor;
 	}
@@ -141,7 +145,7 @@ public class RetsTransport {
 	/** 
 	 * Available as an integration last resort
 	 */
-	public RetsHttpResponse doRequest(RetsHttpRequest req) throws RetsException {
+	public IRetsHttpResponse doRequest(RetsHttpRequest req) throws RetsException {
 		Object monitorobj = null;
 		String msg = getMonitorMessage(req);
 		monitorobj = this.monitor.eventStart(msg);
@@ -149,7 +153,7 @@ public class RetsTransport {
 		req.setVersion(this.version);
 		req.setUrl(this.capabilities);
 
-		RetsHttpResponse httpResponse;
+		IRetsHttpResponse httpResponse;
 		try {
 			httpResponse = this.client.doRequest(this.method, req);
 		} finally {
@@ -179,9 +183,9 @@ public class RetsTransport {
 	 * @see #setCapabilities
 	 */
 	public LoginResponse login(LoginRequest req) throws RetsException {
-		RetsHttpResponse retsHttpResponse = this.doRequest(req);
+		IRetsHttpResponse IRetsHttpResponse = this.doRequest(req);
 
-		String versionHeader = retsHttpResponse.getHeader(RetsVersion.RETS_VERSION_HEADER);
+		String versionHeader = IRetsHttpResponse.getHeader(RetsVersion.RETS_VERSION_HEADER);
 		// may be null, which is fine, return null, dont throw 
 		RetsVersion retsVersion = RetsVersion.getVersion(versionHeader);
 		if( retsVersion == null && this.strict ) 
@@ -191,10 +195,10 @@ public class RetsTransport {
 
 		LoginResponse response = new LoginResponse(this.capabilities.getLoginUrl());
 
-		String sessionId = retsHttpResponse.getCookie(RETS_SESSION_ID_HEADER);
+		String sessionId = IRetsHttpResponse.getCookie(RETS_SESSION_ID_HEADER);
 		response.setSessionId(sessionId);
 		response.setStrict(this.strict);
-		response.parse(retsHttpResponse.getInputStream(), this.version);
+		response.parse(IRetsHttpResponse.getInputStream(), this.version);
 		return response;
 	}
 
@@ -212,7 +216,7 @@ public class RetsTransport {
 			return null;
 		}
 		RetsHttpRequest req = new LogoutRequest();
-		RetsHttpResponse httpResponse = doRequest(req);
+		IRetsHttpResponse httpResponse = doRequest(req);
 		LogoutResponse response = new LogoutResponse();
 		response.setStrict(this.strict);
 		try {
@@ -235,7 +239,7 @@ public class RetsTransport {
 	 * @param collector the result object that will store the data
 	 */
 	public void search(SearchRequest req, SearchResultCollector collector) throws RetsException {
-		RetsHttpResponse httpResponse = doRequest(req);
+		IRetsHttpResponse httpResponse = doRequest(req);
 		new SearchResultHandler(collector).parse(httpResponse.getInputStream(), httpResponse.getCharset());
 	}
 
@@ -247,7 +251,7 @@ public class RetsTransport {
 	 * @param processor the result object that will process the data
 	 */
 	public SearchResultSet search(SearchRequest req, SearchResultProcessor processor) throws RetsException {
-		RetsHttpResponse httpResponse = doRequest(req);
+		IRetsHttpResponse httpResponse = doRequest(req);
 		return processor.parse(httpResponse.getInputStream());
 	}
 
@@ -263,7 +267,7 @@ public class RetsTransport {
 			throw new RetsException("Server does not support GetObject transaction.");
 		}
 		req.setUrl(this.capabilities);
-		RetsHttpResponse httpResponse = this.client.doRequest(this.method, req);
+		IRetsHttpResponse httpResponse = this.client.doRequest(this.method, req);
 		GetObjectResponse result = new GetObjectResponse(httpResponse.getHeaders(), httpResponse.getInputStream());
 		return result;
 	}
@@ -275,7 +279,7 @@ public class RetsTransport {
 			req.setCompactFormat();
 		}
 		try {
-			RetsHttpResponse httpResponse = doRequest(req);
+			IRetsHttpResponse httpResponse = doRequest(req);
 			Object monitorobj = null;
 			monitorobj = this.monitor.eventStart("Parsing metadata");
 			try {
@@ -310,7 +314,7 @@ public class RetsTransport {
 	}
 
 	public GetMetadataResponse getMetadata(GetMetadataRequest req) throws RetsException {
-		RetsHttpResponse httpResponse = doRequest(req);
+		IRetsHttpResponse httpResponse = doRequest(req);
 		Object monitorobj = null;
 		monitorobj = this.monitor.eventStart("Parsing metadata");
 		try {
@@ -326,7 +330,7 @@ public class RetsTransport {
 	}
 
 	public boolean changePassword(ChangePasswordRequest req) throws RetsException {
-		RetsHttpResponse httpResponse = doRequest(req);
+		IRetsHttpResponse httpResponse = doRequest(req);
 		ChangePasswordResponse response = new ChangePasswordResponse(httpResponse.getInputStream());
 		// response will throw an exception if there is an error code
 		return (response != null);
