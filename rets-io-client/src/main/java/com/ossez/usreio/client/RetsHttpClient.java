@@ -1,6 +1,8 @@
 package com.ossez.usreio.client;
 
 
+import com.ossez.usreio.client.interfaces.IRetsHttpResponse;
+
 public abstract class RetsHttpClient {
 
     public static final String SESSION_ID_COOKIE = "RETS-Session-ID";
@@ -16,7 +18,7 @@ public abstract class RetsHttpClient {
      * @return
      * @throws RetsException
      */
-    public abstract RetsHttpResponse doRequest(String httpMethod, RetsHttpRequest request) throws RetsException;
+    public abstract IRetsHttpResponse doRequest(String httpMethod, RetsHttpRequest request) throws RetsException;
 
     /**
      *

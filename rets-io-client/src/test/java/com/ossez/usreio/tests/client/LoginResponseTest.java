@@ -2,7 +2,7 @@ package com.ossez.usreio.tests.client;
 
 
 import com.ossez.usreio.client.CapabilityUrls;
-import com.ossez.usreio.client.LoginResponse;
+import com.ossez.usreio.client.models.response.LoginResponse;
 import com.ossez.usreio.client.RetsException;
 import com.ossez.usreio.common.rets.RetsVersion;
 import org.junit.Test;

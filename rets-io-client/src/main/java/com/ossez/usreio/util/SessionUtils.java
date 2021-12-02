@@ -1,6 +1,7 @@
 package com.ossez.usreio.util;
 
 import com.ossez.usreio.client.*;
+import com.ossez.usreio.client.models.response.LoginResponse;
 import com.ossez.usreio.common.rets.RetsConfigurator;
 import com.ossez.usreio.common.rets.RetsVersion;
 import org.apache.commons.lang3.ObjectUtils;

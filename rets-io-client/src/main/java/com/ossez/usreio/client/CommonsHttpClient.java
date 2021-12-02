@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.ossez.usreio.client.interfaces.IRetsHttpResponse;
 import com.ossez.usreio.common.util.CaseInsensitiveTreeMap;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -88,12 +89,12 @@ public class CommonsHttpClient extends RetsHttpClient {
 		this.httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY, creds);
 	}
 	@Override
-	public RetsHttpResponse doRequest(String httpMethod, RetsHttpRequest request) throws RetsException {
+	public IRetsHttpResponse doRequest(String httpMethod, RetsHttpRequest request) throws RetsException {
 		return "GET".equals(StringUtils.upperCase(httpMethod)) ? this.doGet(request) : this.doPost(request);
 	}
 
 	//----------------------method implementations
-	public RetsHttpResponse doGet(RetsHttpRequest request) throws RetsException {
+	public IRetsHttpResponse doGet(RetsHttpRequest request) throws RetsException {
 		String url = request.getUrl();
 		String args = request.getHttpParameters();
 		if (args != null) {
@@ -103,7 +104,7 @@ public class CommonsHttpClient extends RetsHttpClient {
 		return execute(method, request.getHeaders());
 	}
 
-	public RetsHttpResponse doPost(RetsHttpRequest request) throws RetsException {
+	public IRetsHttpResponse doPost(RetsHttpRequest request) throws RetsException {
 		String url = request.getUrl();
 		String body = request.getHttpParameters();
 		if (body == null) body = "";  // commons-httpclient 3.0 refuses to accept null entity (body)
@@ -118,7 +119,7 @@ public class CommonsHttpClient extends RetsHttpClient {
 		return execute(method, request.getHeaders());
 	}
 
-	protected RetsHttpResponse execute(final HttpRequestBase method, Map<String,String> headers) throws RetsException {
+	protected IRetsHttpResponse execute(final HttpRequestBase method, Map<String,String> headers) throws RetsException {
 		try {
 			// add the default headers
 			if (this.defaultHeaders != null) {
@@ -142,7 +143,7 @@ public class CommonsHttpClient extends RetsHttpClient {
 			if (status.getStatusCode() != HttpStatus.SC_OK) {
 				throw new InvalidHttpStatusException(status);
 			}
-			return new CommonsHttpClientResponse(response, getCookies());
+			return new CommonsHttpClientResponseI(response, getCookies());
 		} catch (Exception e) {
 			throw new RetsException(e);
 		}

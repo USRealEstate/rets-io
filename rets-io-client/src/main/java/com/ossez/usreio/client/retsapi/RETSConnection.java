@@ -84,7 +84,7 @@ public class RETSConnection extends java.lang.Object {
      */
     public RETSConnection() {
         setRequestHeaderField("User-Agent", "Mozilla/4.0");
-        setRequestHeaderField("RETS-Version", "RETS/1.0");
+        setRequestHeaderField("RETS-Version", "RETS/1.7.2");
     }
 
     /**

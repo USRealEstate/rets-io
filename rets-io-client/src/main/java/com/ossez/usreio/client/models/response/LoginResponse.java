@@ -1,5 +1,6 @@
-package com.ossez.usreio.client;
+package com.ossez.usreio.client.models.response;
 
+import com.ossez.usreio.client.*;
 import com.ossez.usreio.common.rets.RetsVersion;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;

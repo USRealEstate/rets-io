@@ -1,6 +1,6 @@
 package com.ossez.usreio.tests.client;
 
-import com.ossez.usreio.client.LoginRequest;
+import com.ossez.usreio.client.models.request.LoginRequest;
 
 public class LoginRequestTest extends RetsTestCase {
 	public void testGetUrl() {

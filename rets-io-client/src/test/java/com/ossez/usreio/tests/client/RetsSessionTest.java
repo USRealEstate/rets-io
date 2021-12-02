@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class RetsSessionTest extends RetsTestCase {
     private final Logger logger = LoggerFactory.getLogger(RetsSessionTest.class);
 
-
     /**
      * Test Login should return SessionID from server
      */
@@ -33,12 +32,33 @@ public class RetsSessionTest extends RetsTestCase {
         try {
             RetsSession session = SessionUtils.retsLogin(retsLoginUrl, retsUsername, retsPassword, RetsVersion.RETS_1_7_2);
             assertNotNull(session.getSessionId());
+
+            // CHECK MetaData
+            logger.error("Session ID - [{}]", session.getSessionId());
+            logger.error("MetaData version - [{}]", session.getMetadataVersion());
+            logger.error("MetaData Timestamp - [{}]", session.getMetadataTimestamp());
+
+        } catch (RetsException ex) {
+            logger.error("Session Login Error", ex);
+        }
+    }
+
+    /**
+     * Test Login should return SessionID from server
+     */
+    @Test
+    public void testLoginWithConfigurator() {
+        logger.debug("Test Rets Session Login by URL: [{}]", retsLoginUrl);
+
+        try {
+            RetsSession session = SessionUtils.retsLogin(retsConfigurator);
+//            session.login()
+            assertNotNull(session.getSessionId());
         } catch (RetsException ex) {
             logger.debug("Session Login Error", ex);
         }
-
-
     }
+
 
     /**
      * TEST Logout
@@ -50,7 +70,9 @@ public class RetsSessionTest extends RetsTestCase {
 
         try {
             session = SessionUtils.retsLogin(retsLoginUrl, retsUsername, retsPassword, RetsVersion.RETS_1_7_2);
+
             assertNotNull(session.getSessionId());
+
         } catch (RetsException ex) {
             logger.debug("Session Login Error", ex);
         }

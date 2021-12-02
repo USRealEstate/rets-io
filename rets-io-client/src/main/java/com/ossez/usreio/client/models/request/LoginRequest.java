@@ -1,4 +1,7 @@
-package com.ossez.usreio.client;
+package com.ossez.usreio.client.models.request;
+
+import com.ossez.usreio.client.CapabilityUrls;
+import com.ossez.usreio.client.VersionInsensitiveRequest;
 
 public class LoginRequest extends VersionInsensitiveRequest {
 

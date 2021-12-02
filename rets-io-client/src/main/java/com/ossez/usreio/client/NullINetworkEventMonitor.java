@@ -1,6 +1,8 @@
 package com.ossez.usreio.client;
 
-public class NullNetworkEventMonitor implements NetworkEventMonitor {
+import com.ossez.usreio.client.interfaces.INetworkEventMonitor;
+
+public class NullINetworkEventMonitor implements INetworkEventMonitor {
 	
 	public Object eventStart(String message) {
 		return null;
