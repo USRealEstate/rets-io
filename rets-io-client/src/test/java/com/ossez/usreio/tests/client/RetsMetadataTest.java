@@ -29,7 +29,7 @@ public class RetsMetadataTest extends RetsTestCase {
 
             session = SessionUtils.retsLogin(retsConfigurator);
 
-            MSystem system = session.getMetadata().getSystem();
+            MSystem system = session.getMetadata("C:\\WorkDir\\metaData.xml").getSystem();
             System.out.println(
                     "SYSTEM: " + system.getSystemID() +
                             " - " + system.getSystemDescription());

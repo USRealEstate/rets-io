@@ -1,15 +1,15 @@
 package com.ossez.usreio.client;
 
-public abstract class Main extends RetsHttpRequest {
-	/**
-	 * Abstract class of subclasses where the Version of RETS is not needed (Password Request, Login Request, etc.)
-	 */
-	public Main() {
-		super();
-	}
+/**
+ * Main function for Test and init file.
+ * <p>
+ * Please don't use it.
+ *
+ * @author YuCheng Hu
+ */
+public class Main {
 
-	@Override
-	public void setVersion(RetsVersion version) {
-		//noop - I don't care about version
-	}
+    public Main() {
+        System.out.println("MAIN");
+    }
 }
