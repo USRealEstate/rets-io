@@ -7,7 +7,7 @@ package com.ossez.usreio.client.retsapi;
 
 //import com.aftexsw.util.bzip.CBZip2InputStream;
 
-import com.ossez.usreio.common.rets.RetsConfigurator;
+import com.ossez.usreio.common.util.RETSConfigurator;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -32,7 +32,7 @@ public class RETSConnection extends java.lang.Object {
     private final static Logger logger = LoggerFactory.getLogger(RETSConnection.class);
 
     static {
-        RetsConfigurator.configure();
+        RETSConfigurator.configure();
     }
 
     //Key value pairs for request header.

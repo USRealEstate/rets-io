@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ossez.usreio.common.rets.RetsVersion;
 import com.ossez.usreio.tests.common.metadata.JDomCompactBuilder;
 import com.ossez.usreio.tests.common.metadata.JDomStandardBuilder;
 import com.ossez.usreio.tests.common.metadata.Metadata;
