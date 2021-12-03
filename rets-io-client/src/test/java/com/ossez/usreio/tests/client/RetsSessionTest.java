@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * Test for RETS session
+ * RETS Connection Test
  *
  * @author YuCheng Hu
  */
