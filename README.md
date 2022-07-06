@@ -2,16 +2,24 @@
 
 The REoC RETS Client - Java is a library used to access data on RETS compliant servers.
 
-This is a fork of the [jrets](https://github.com/jpfielding/jrets) master branch, which it self is a fork of the [CART RETS client](http://cart.sourceforge.net/).
+
+## Links and related projects
+
+| Project          | URL                                                                        | NOTE                   | 
+|------------------|----------------------------------------------------------------------------|------------------------|
+| jrets            | [https://github.com/jpfielding/jrets](https://github.com/jpfielding/jrets) | fork from this proejct |
+| CART RETS client | [http://cart.sourceforge.net/](http://cart.sourceforge.net/)               | Init submit form 2004  |
 
 ## Scan QR
 
-You can Subscribe us by scan QR below:
+You can Subscribe us by scan QR below to get more info.
 
-image::https://cdn.ossez.com/img/cwikius/cwikus.jpg[]
+![](https://cdn.ossez.com/img/cwikius/cwikus.jpg)
 
 ## Examples
+
 Simple example of a search:
+
 ```
 public static void main(String[] args) throws MalformedURLException {
 
@@ -78,10 +86,7 @@ public static void main(String[] args) throws MalformedURLException {
 		}
 ```
 
-
-
 Simple example making a GetObjectRequest:
-
 
 ```
 	public static void main(String[] args) throws MalformedURLException {
@@ -178,8 +183,8 @@ Simple example making a GetObjectRequest:
 		}
 	}
 ```
-Example of Geting Metadata:
 
+Example of Geting Metadata:
 
 ```
 	public static void main(String[] args) throws MalformedURLException {
@@ -238,7 +243,6 @@ Example of Geting Metadata:
 	}	
 ```
 
-
-
 ## License
-[REoC RETS Client is licensed under the MIT License](https://github.com/ossez-com/reoc-mls-client/blob/master/LICENSE)
+
+[USRealEstate RETS Client is licensed under the MIT License](https://github.com/ossez-com/reoc-mls-client/blob/master/LICENSE)
