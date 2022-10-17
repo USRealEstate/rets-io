@@ -24,8 +24,10 @@ public class MD5Util {
         return getDigestAsHexString(source.getBytes());
     }
 
+
     /** returns MD5 HEX value for a given a byte array
      *  @param source byte array to convert
+     * @return
      */
     public static String getDigestAsHexString(byte[] source) {
         String retStr = null;
