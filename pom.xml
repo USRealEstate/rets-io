@@ -44,7 +44,7 @@
             <url>https://repo.ossez.com/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-    
+
     <modules>
         <module>rets-io-common</module>
         <module>rets-io-client</module>
@@ -121,13 +121,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
+            <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.0</version>
+            <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
 
@@ -187,7 +187,6 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
-
                     </execution>
                 </executions>
             </plugin>
