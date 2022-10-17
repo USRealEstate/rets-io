@@ -25,6 +25,26 @@
         </developer>
     </developers>
 
+    <licenses>
+        <license>
+            <name>The MIT license</name>
+            <url>https://opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <distributionManagement>
+        <repository>
+            <id>ossez-repo</id>
+            <url>https://repo.ossez.com/repository/maven-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>ossez-repo</id>
+            <url>https://repo.ossez.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
     <modules>
         <module>rets-io-common</module>
         <module>rets-io-client</module>
