@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.ossez.usreio</groupId>
         <artifactId>rets-io</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <name>Rets-Io-Common</name>

@@ -10,5 +10,10 @@
         <module name="rets-io-client" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="rets-io" target="11" />
+      <module name="rets-io-client" target="11" />
+      <module name="rets-io-common" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
