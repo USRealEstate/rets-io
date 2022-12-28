@@ -168,7 +168,6 @@
         </plugins>
     </build>
 
-
     <properties>
         <!-- Generic properties -->
         <java.version>11</java.version>
