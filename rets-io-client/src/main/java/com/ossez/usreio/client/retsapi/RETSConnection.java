@@ -280,10 +280,10 @@ public class RETSConnection extends java.lang.Object {
 
     /**
      * gets the url content and returns an inputstream
-     *
      * @param strURL
      * @param requestMethod
      * @param requestMap
+     * @return
      */
     public InputStream getURLContent(String strURL, String requestMethod, Map requestMap) {
         InputStream is = null;

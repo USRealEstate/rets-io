@@ -33,6 +33,9 @@ public class RetsVersion implements Serializable {
     }
 
     /**
+     * @param major
+     * @param minor
+     * @param draft
      * @deprecated use <code>new RetsVersion(major, minor, 0, draft)</code>
      */
     @Deprecated
