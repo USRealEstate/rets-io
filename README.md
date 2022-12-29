@@ -1,7 +1,6 @@
-# reoc-mls-client
+# Rets-Io
 
-The REoC RETS Client - Java is a library used to access data on RETS compliant servers.
-
+The Rets-Io RETS Client - Java is a library used to access data on RETS compliant servers.
 
 ## Links and related projects
 
@@ -10,13 +9,25 @@ The REoC RETS Client - Java is a library used to access data on RETS compliant s
 | jrets            | [https://github.com/jpfielding/jrets](https://github.com/jpfielding/jrets) | fork from this proejct |
 | CART RETS client | [http://cart.sourceforge.net/](http://cart.sourceforge.net/)               | Init submit form 2004  |
 
-## Scan QR
+# 公众平台
 
-You can Subscribe us by scan QR below to get more info.
+我们建议您通过社区论坛来和我们进行沟通，请关注我们公众平台上的账号
 
-![](https://cdn.ossez.com/img/cwikius/cwikus.jpg)
+## 微信公众号
 
-## Examples
+![](https://cdn.ossez.com/img/cwikius/cwikius-qr-wechat-search-w400.png)
+
+## 头条号
+
+我们也在头条号上创建了我们的公众号，请扫描下面的 QR 关注我们的头条号。
+
+![](https://cdn.ossez.com/img/cwikius/cwikus-qr-toutiao.png)
+
+## 知乎
+
+请关注我们的知乎：https://www.zhihu.com/people/huyuchengus
+
+# Examples
 
 Simple example of a search:
 
