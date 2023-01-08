@@ -7,14 +7,19 @@
       <option name="url" value="https://repo.ossez.com/repository/maven-snapshots/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="Central Repository" />
-      <option name="url" value="https://repo.ossez.com/repository/maven-public/" />
+      <option name="id" value="ossrh-releases" />
+      <option name="name" value="ossrh Releases" />
+      <option name="url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="ossez-repo-releases" />
       <option name="name" value="OSSEZ Private Releases" />
       <option name="url" value="https://repo.ossez.com/repository/maven-releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.ossez.com/repository/maven-public/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="ossez-repo-snapshots" />

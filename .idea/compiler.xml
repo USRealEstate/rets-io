@@ -11,5 +11,8 @@
         <module name="rets-io-client" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Rets-Io" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
