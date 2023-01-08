@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.ossez.usreio</groupId>
+    <artifactId>rets-io-common</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>com.ossez.usreio</groupId>
+        <artifactId>rets-io</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+
+    <name>Rets-Io-Common</name>
+    <description>Rets-Io-Common for RETS API</description>
+    <url>https://github.com/USRealEstate/rets-io.git</url>
+
+    <developers>
+        <developer>
+            <name>YuCheng Hu</name>
+            <id>honeymoose</id>
+            <email>huyuchengus@gmail.com</email>
+            <timezone>-5</timezone>
+            <organization>Open Source</organization>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>xalan</groupId>
+            <artifactId>xalan</artifactId>
+            <version>2.7.2</version>
+        </dependency>
+    </dependencies>
+</project>
