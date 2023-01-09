@@ -355,6 +355,9 @@
                         <goals>
                             <goal>sign</goal>
                         </goals>
+                        <configuration>
+                            <passphraseServerId>ossez</passphraseServerId>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -393,7 +396,6 @@
             </plugin>
         </plugins>
     </build>
-
 
     <properties>
         <!-- Generic properties -->
