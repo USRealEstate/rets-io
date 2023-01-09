@@ -1,5 +1,7 @@
 # Rets-Io
 
+![Maven Central](https://img.shields.io/maven-central/v/com.ossez.usreio/rets-io?color=blue&style=for-the-badge)
+
 The Rets-Io RETS Client - Java is a library used to access data on RETS compliant servers.
 
 ## Links and related projects

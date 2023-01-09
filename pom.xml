@@ -392,7 +392,6 @@
                 </configuration>
             </plugin>
         </plugins>
-
     </build>
 
 
