@@ -34,7 +34,7 @@
         <dependency>
             <groupId>com.ossez.usreio</groupId>
             <artifactId>rets-io-common</artifactId>
-            <version>0</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
 
         <!-- LOG -->
