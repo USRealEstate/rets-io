@@ -18,6 +18,7 @@ import com.ossez.usreio.tests.common.metadata.types.MSearchHelp;
 public class Metadata implements Serializable {
 
 	protected MSystem system;
+	protected String rawMetaData;
 
 	public Metadata(MetaCollector collector) throws MetadataException {
 		MetaObject[] sys = collector.getMetadata(MetadataType.SYSTEM, null);
@@ -150,5 +151,13 @@ public class Metadata implements Serializable {
 
 	public MResource getResource(MClass clazz) {
 		return getResource(getResourceId(clazz));
+	}
+
+	public String getRawMetaData() {
+		return rawMetaData;
+	}
+
+	public void setRawMetaData(String rawMetaData) {
+		this.rawMetaData = rawMetaData;
 	}
 }
