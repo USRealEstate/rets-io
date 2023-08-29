@@ -302,8 +302,7 @@ public class RetsTransport {
 				}
 				metadataBuilder.setStrict(this.strict);
 			
-		        
-		        
+
 				return metadataBuilder.doBuild(xmlDocument);
 			} finally {
 				this.monitor.eventFinish(monitorobj);
