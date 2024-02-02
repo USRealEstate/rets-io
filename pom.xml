@@ -49,7 +49,6 @@
     <modules>
         <module>common</module>
         <module>client</module>
-        <module>validation</module>
     </modules>
 
     <dependencies>
