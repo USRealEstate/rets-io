@@ -13,6 +13,7 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite;
 
+
 		suite = new TestSuite();
 		/*suite.addTestSuite(GetMetadataRequestTest.class);
 		suite.addTestSuite(GetMetadataResponseTest.class);
