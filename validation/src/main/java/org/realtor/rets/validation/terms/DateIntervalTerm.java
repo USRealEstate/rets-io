@@ -1,4 +1,4 @@
-/* $Header: /usr/local/cvsroot/rets/validation/src/org/realtor/rets/validation/terms/DateIntervalTerm.java,v 1.2 2003/12/04 15:28:33 rsegelman Exp $  */
+
 package org.realtor.rets.validation.terms;
 
 import java.text.ParseException;
@@ -7,12 +7,13 @@ import java.util.regex.*;
 
 
 /**
- *  DateIntervalTerm.java Created Sep 17, 2003
+ * DateIntervalTerm.java Created Sep 17, 2003
+ * <p>
+ * <p>
+ * Copyright 2003, Avantia inc.
  *
- *
- *  Copyright 2003, Avantia inc.
- *  @version $Revision: 1.2 $
- *  @author scohen
+ * @author scohen
+ * @version $Revision: 1.2 $
  */
 public class DateIntervalTerm extends AbstractTerm {
     private static long MILLIS_PER_HOUR = 3600 * 1000;
@@ -37,7 +38,7 @@ public class DateIntervalTerm extends AbstractTerm {
     }
 
     /**
-     * @param l
+     * @param interval
      */
     public DateIntervalTerm(long interval) {
         this();
@@ -107,7 +108,7 @@ public class DateIntervalTerm extends AbstractTerm {
     }
 
     private void appendTimeUnit(StringBuffer toAppend, int time, String label,
-        boolean isTimeUnit) {
+                                boolean isTimeUnit) {
         if (time > 0) {
             if (isTimeUnit && (toAppend.indexOf("T") < 0)) {
                 toAppend.append("T");
@@ -118,9 +119,9 @@ public class DateIntervalTerm extends AbstractTerm {
         }
     }
 
+
     /**
-     * @param interval
-     * @return
+     * @throws ParseException
      */
     private void parseInterval() throws ParseException {
         String sVal = (String) getValue();
@@ -141,7 +142,7 @@ public class DateIntervalTerm extends AbstractTerm {
                 weeks = 0;
             } else {
                 throw new ParseException(sVal +
-                    " is not a valid Date interval", 0);
+                        " is not a valid Date interval", 0);
             }
         }
     }

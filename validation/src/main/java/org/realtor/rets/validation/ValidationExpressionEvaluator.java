@@ -1,4 +1,3 @@
-/* $Header: /usr/local/cvsroot/rets/validation/src/org/realtor/rets/validation/ValidationExpressionEvaluator.java,v 1.2 2003/12/04 15:28:33 rsegelman Exp $  */
 package org.realtor.rets.validation;
 
 import org.realtor.rets.validation.operators.CloseParen;
