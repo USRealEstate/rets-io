@@ -1,8 +1,3 @@
-/*
- * RETSConnection.java
- *
- * Created on November 16, 2001, 1:33 PM
- */
 package com.ossez.usreio.client.retsapi;
 
 //import com.aftexsw.util.bzip.CBZip2InputStream;
@@ -12,7 +7,6 @@ import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
