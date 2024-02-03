@@ -6,14 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="rets-io-client (1)" />
-        <module name="rets-io-common" />
         <module name="rets-io-validation" />
+        <module name="rets-io-common" />
         <module name="rets-io-client" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Rets-Io" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
